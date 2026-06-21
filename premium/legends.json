@@ -3,5 +3,10 @@
         "Name": "Douglas Englebart",
         "Details": "more info",
         "Image": ""
+    },
+    {
+        "Name": "Christopher Scholes",
+        "Details": "second info",
+        "Image": ""
     }
 ]
