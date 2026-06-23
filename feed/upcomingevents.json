@@ -3,12 +3,12 @@
         "EventName": "Pilolo festival",
         "EventDesc": "Pilolo Diaspora, Osu",
         "EventDate": "10/08/2026 11:45:00.00",
-        "EventImage": "eduqii_on.png"
+        "EventImage": "https://basinfobusiness.github.io/the_eduqii/images/eduqii_on.png"
     },
     {
         "EventName": "Christmas Day",
         "EventDesc": "Ho! Ho! Ho! MErry Christmas",
         "EventDate": "12/25/2026",
-        "EventImage": "eduqii_on.png"
+        "EventImage": "https://basinfobusiness.github.io/the_eduqii/images/eduqii_on.png"
     }
 ]
