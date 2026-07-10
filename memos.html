@@ -141,10 +141,231 @@
         </li>
       </ul>
     </div>
-    <!-- body goes in here -->
 
-    <!-- end of body -->
+    <main>
+      <!-- Header Section -->
+      <div class="container py-5">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <h1 class="display-4 fw-bold">My Memos</h1>
+            <p class="lead mb-4">Keep track of important notes and reminders for your learning journey.</p>
+          </div>
+          <div class="col-lg-4 text-end">
+            <button class="btn btn-bd-primary btn-lg">+ New Memo</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="b-example-divider"></div>
+
+      <!-- Search and Filter Section -->
+      <div class="container py-4">
+        <div class="row">
+          <div class="col-md-6">
+            <input type="text" class="form-control form-control-lg" placeholder="Search memos..." id="memoSearch">
+          </div>
+          <div class="col-md-6">
+            <select class="form-select form-select-lg" aria-label="Filter by category">
+              <option selected>All Categories</option>
+              <option value="1">Study Notes</option>
+              <option value="2">Reminders</option>
+              <option value="3">Important</option>
+              <option value="4">Ideas</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="b-example-divider"></div>
+
+      <!-- Memos Grid -->
+      <div class="container py-5">
+        <div class="row">
+          <!-- Memo Card 1 -->
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <span class="badge bg-primary mb-2">Study Notes</span>
+                <h5 class="card-title">Chapter 5 Summary</h5>
+                <p class="card-text">Review key concepts about photosynthesis and cellular respiration. Include diagrams and formulas for the exam.</p>
+                <small class="text-muted">Last updated: 2 hours ago</small>
+              </div>
+              <div class="card-footer bg-transparent border-top">
+                <a href="#" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Memo Card 2 -->
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <span class="badge bg-warning text-dark mb-2">Reminders</span>
+                <h5 class="card-title">Assignment Due Date</h5>
+                <p class="card-text">Mathematics project submission deadline is Friday. Ensure all calculations are verified and work is properly formatted.</p>
+                <small class="text-muted">Last updated: 1 day ago</small>
+              </div>
+              <div class="card-footer bg-transparent border-top">
+                <a href="#" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Memo Card 3 -->
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <span class="badge bg-danger mb-2">Important</span>
+                <h5 class="card-title">Exam Preparation</h5>
+                <p class="card-text">Final exam topics covered: Chapters 1-8. Practice questions available in the course materials section.</p>
+                <small class="text-muted">Last updated: 3 days ago</small>
+              </div>
+              <div class="card-footer bg-transparent border-top">
+                <a href="#" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Memo Card 4 -->
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <span class="badge bg-success mb-2">Ideas</span>
+                <h5 class="card-title">Project Ideas</h5>
+                <p class="card-text">Consider building a portfolio website showcasing your coding projects and certifications.</p>
+                <small class="text-muted">Last updated: 1 week ago</small>
+              </div>
+              <div class="card-footer bg-transparent border-top">
+                <a href="#" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Memo Card 5 -->
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <span class="badge bg-info mb-2">Study Notes</span>
+                <h5 class="card-title">Physics Formulas</h5>
+                <p class="card-text">Keep a list of commonly used physics equations: F=ma, E=mc², v=ir, and more.</p>
+                <small class="text-muted">Last updated: 5 days ago</small>
+              </div>
+              <div class="card-footer bg-transparent border-top">
+                <a href="#" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Memo Card 6 -->
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <span class="badge bg-secondary mb-2">Reminders</span>
+                <h5 class="card-title">Group Study Session</h5>
+                <p class="card-text">Schedule group study sessions every Wednesday at 5 PM in the library for the upcoming quiz.</p>
+                <small class="text-muted">Last updated: 2 days ago</small>
+              </div>
+              <div class="card-footer bg-transparent border-top">
+                <a href="#" class="btn btn-sm btn-outline-primary me-2">Edit</a>
+                <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation" class="mt-5">
+          <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="b-example-divider"></div>
+
+      <!-- Statistics Section -->
+      <div class="container py-5">
+        <h2 class="text-center mb-4">Your Memo Statistics</h2>
+        <div class="row text-center">
+          <div class="col-md-3 mb-4">
+            <div class="p-4 border rounded">
+              <h3 class="display-5 fw-bold text-primary">24</h3>
+              <p class="text-muted">Total Memos</p>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="p-4 border rounded">
+              <h3 class="display-5 fw-bold text-success">8</h3>
+              <p class="text-muted">Study Notes</p>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="p-4 border rounded">
+              <h3 class="display-5 fw-bold text-warning">12</h3>
+              <p class="text-muted">Reminders</p>
+            </div>
+          </div>
+          <div class="col-md-3 mb-4">
+            <div class="p-4 border rounded">
+              <h3 class="display-5 fw-bold text-danger">4</h3>
+              <p class="text-muted">Important</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="container mt-5 py-5">
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <h5>About Eduqii</h5>
+          <p>Empowering learners worldwide with quality education and innovative learning solutions.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Quick Links</h5>
+          <ul class="list-unstyled">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 mb-4">
+          <h5>Support</h5>
+          <ul class="list-unstyled">
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Contact Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <hr class="my-4">
+      <p class="text-center text-muted">
+        <span class="float-end"><a href="#">Back to top</a></span>
+        <span id="bizcopy">&copy; 2017– eduqii, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></span>
+      </p>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      let myYear = new Date().getFullYear();
+      document.querySelector('#bizcopy').innerHTML = `&copy; 2017–${myYear} eduqii, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a>`;
+    </script>
     <!-- <script src="https://cdn.datatables.net/2.3.8/js/dataTables.dataTables.min.js"></script> -->
     <script>
         $(document).ready(function() {
