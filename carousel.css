@@ -15,16 +15,72 @@ body {
 /* Carousel base class */
 .carousel {
   margin-bottom: 4rem;
+  overflow: hidden;
+}
+
+.carousel-inner {
+  overflow: hidden;
+}
+
+.carousel-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
-  bottom: 3rem;
+  bottom: 1rem;
   z-index: 10;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+@media (min-width: 576px) {
+  .carousel-caption {
+    bottom: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .carousel-caption {
+    bottom: 2rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .carousel-caption {
+    bottom: 3rem;
+  }
 }
 
 /* Declare heights because of positioning of img element */
 .carousel-item {
-  height: 32rem;
+  height: 20rem;
+}
+
+@media (min-width: 576px) {
+  .carousel-item {
+    height: 24rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .carousel-item {
+    height: 28rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .carousel-item {
+    height: 32rem;
+  }
 }
 
 
@@ -61,6 +117,17 @@ body {
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */
+
+@media (min-width: 576px) {
+  /* Carousel caption text for mobile */
+  .carousel-caption h1 {
+    font-size: 1.5rem;
+  }
+
+  .carousel-caption p {
+    font-size: 0.875rem;
+  }
+}
 
 @media (min-width: 40em) {
   /* Bump up size of carousel content */
