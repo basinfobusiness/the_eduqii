@@ -96,6 +96,38 @@
       .bd-mode-toggle .dropdown-menu .active .bi {
         display: block !important;
       }
+      .carousel-item {
+        position: relative;
+        min-height: 60vh;
+      }
+      .carousel-item::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.6));
+        pointer-events: none;
+        z-index: 1;
+      }
+      .carousel-item img {
+        min-height: 60vh;
+        object-fit: cover;
+      }
+      .carousel-caption {
+        position: relative;
+        z-index: 2;
+        background: rgba(0, 0, 0, 0.45);
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        backdrop-filter: blur(6px);
+      }
+      .carousel-caption h1,
+      .carousel-caption p,
+      .carousel-caption a.btn {
+        color: #fff;
+      }
+      .carousel-caption a.btn {
+        min-width: 8rem;
+      }
     </style>
   </head>
   <body>
@@ -155,40 +187,34 @@
 
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <svg aria-hidden="true" class="bd-placeholder-img" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-              <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-            </svg>
+            <img src="seniorhighschool/unsplash-photo-1.jpg" class="d-block w-100" alt="Student studying with focus" style="height:100%; object-fit:cover;">
             <div class="container">
               <div class="carousel-caption text-start">
-                <h1>Home Sweet Home</h1>
-                <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p>
-                <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+                <h1>Learn on your own terms.</h1>
+                <p class="opacity-75">Eduqii helps you build confidence through guided tutorials, practice quizzes, and progress tracking.</p>
+                <p><button type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#signupInfoModal">Sign up today</button></p>
               </div>
             </div>
           </div>
 
           <div class="carousel-item">
-            <svg aria-hidden="true" class="bd-placeholder-img" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-              <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-            </svg>
+            <img src="seniorhighschool/unsplash-photo-2.jpg" class="d-block w-100" alt="Quiz practice session" style="height:100%; object-fit:cover;">
             <div class="container">
               <div class="carousel-caption">
-                <h1>Another example headline.</h1>
-                <p>Some representative placeholder content for the second slide of the carousel.</p>
-                <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+                <h1>Practice with purpose.</h1>
+                <p>Try short quizzes tailored to your skills and review instant feedback to improve faster.</p>
+                <p><a class="btn btn-lg btn-primary" href="quizprep.html">Start a quiz</a></p>
               </div>
             </div>
           </div>
 
           <div class="carousel-item">
-            <svg aria-hidden="true" class="bd-placeholder-img" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-              <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-            </svg>
+            <img src="seniorhighschool/unsplash-photo-3.jpg" class="d-block w-100" alt="Progress tracking in dashboard" style="height:100%; object-fit:cover;">
             <div class="container">
               <div class="carousel-caption text-end">
-                <h1>One more for good measure.</h1>
-                <p>Some representative placeholder content for the third slide of this carousel.</p>
-                <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+                <h1>Track your growth.</h1>
+                <p>See how your points and achievements add up as you complete lessons and challenges.</p>
+                <p><a class="btn btn-lg btn-primary" href="points.html">View leaderboard</a></p>
               </div>
             </div>
           </div>
@@ -207,83 +233,68 @@
       <!-- Marketing messaging and featurettes -->
       <!-- Wrap the rest of the page in another container to center all the content. -->
       <div class="container marketing">
-        <div class="row">
-          <div class="col-lg-4">
-            <svg aria-label="Placeholder" class="bd-placeholder-img rounded-circle" width="140" height="140" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-            </svg>
+        <div class="row gy-4">
+          <div class="col-lg-4 text-center">
+            <img src="images/ada-lovelace.jpg" class="img-fluid rounded-circle mb-3" width="140" height="140" alt="Ada Lovelace portrait">
             <h2 class="fw-normal">Ada Lovelace</h2>
-            <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
-            <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+            <p>Often called the first computer programmer, Ada Lovelace wrote the first algorithm for Charles Babbage's Analytical Engine and foresaw the future of computing beyond mere calculation.</p>
+            <p><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#adaDetailModal">Learn more &raquo;</button></p>
           </div><!-- /.col-lg-4 -->
 
-          <div class="col-lg-4">
-            <svg aria-label="Placeholder" class="bd-placeholder-img rounded-circle" width="140" height="140" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-            </svg>
+          <div class="col-lg-4 text-center">
+            <img src="images/cvc2.jpg" class="img-fluid rounded-circle mb-3" width="140" height="140" alt="Civilisation learning image">
             <h2 class="fw-normal">Civilisation</h2>
-            <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
-            <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+            <p>Explore the history of ideas and achievements that shaped human society from ancient times to the modern era.</p>
+            <p><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#civilisationModal">View details &raquo;</button></p>
           </div><!-- /.col-lg-4 -->
 
-          <div class="col-lg-4">
-            <svg aria-label="Placeholder" class="bd-placeholder-img rounded-circle" width="140" height="140" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-            </svg>
+          <div class="col-lg-4 text-center">
+            <img src="images/cvc3.jpg" class="img-fluid rounded-circle mb-3" width="140" height="140" alt="Global learning image">
             <h2 class="fw-normal">The World</h2>
-            <p>And lastly this, the third column of representative placeholder content.</p>
-            <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
+            <p>Discover global cultures, languages, and connections that make our world vibrant and interdependent.</p>
+            <p><button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#worldModal">View details &raquo;</button></p>
           </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
 
         <hr class="featurette-divider">
 
-        <div class="row featurette">
+        <div class="row featurette align-items-center">
           <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1">First featurette heading. <span class="text-body-secondary">It’ll blow your mind.</span></h2>
-            <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+            <h2 class="featurette-heading fw-normal lh-1">Personalised learning pathways. <span class="text-body-secondary">Designed for your goals.</span></h2>
+            <p class="lead">Start with topics that matter most to you and follow a guided path built around your exam schedule, study habits, and performance strengths.</p>
+            <p>Eduqii helps students move from confusion to clarity with structured lessons, interactive practice, and progress checkpoints.</p>
+            <p><a class="btn btn-primary" href="tutorials.html">Explore tutorials</a></p>
           </div>
           <div class="col-md-5">
-            <svg aria-label="Placeholder: 500x500" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect>
-              <text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-            </svg>
+            <img src="images/cvc4.jpg" alt="Student studying with learning path" class="featurette-image img-fluid mx-auto rounded shadow-sm">
           </div>
         </div>
 
         <hr class="featurette-divider">
 
-        <div class="row featurette">
+        <div class="row featurette align-items-center">
           <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading fw-normal lh-1">PILOLO FESTIVAL<span class="text-body-secondary"> August 10.</span></h2>
-            <p class="lead">Happening live at Osu, Ghana.</p>
+            <h2 class="featurette-heading fw-normal lh-1">Exam-ready confidence. <span class="text-body-secondary">Practice with feedback.</span></h2>
+            <p class="lead">Build momentum with quizzes, revision notes, and exam strategy content that keeps you focused and ready for peak performance.</p>
+            <p>Track the skills you master, review instant explanations, and identify gaps before test day.</p>
+            <p><a class="btn btn-primary" href="quizprep.html">Start practice</a></p>
           </div>
           <div class="col-md-5 order-md-1">
-            <svg aria-label="Placeholder: 500x500" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg">
-              <title>Pilolo - August 10</title>
-              <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect>
-              <text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-            </svg>
+            <img src="images/cvc9.jpg" alt="Exam preparation and revision" class="featurette-image img-fluid mx-auto rounded shadow-sm">
           </div>
         </div>
 
         <hr class="featurette-divider">
 
-        <div class="row featurette">
+        <div class="row featurette align-items-center">
           <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1">And lastly, this one. <span class="text-body-secondary">Checkmate.</span></h2>
-            <p class="lead">And yes, this is the last block of representative placeholder content. Again, not really intended to be actually read, simply here to give you a better view of what this would look like with some actual content. Your content.</p>
+            <h2 class="featurette-heading fw-normal lh-1">Community support. <span class="text-body-secondary">Stay motivated together.</span></h2>
+            <p class="lead">Join a learning community with shared goals, achievement badges, and friendly challenges that make study time more rewarding.</p>
+            <p>Share progress, compare leaderboards, and celebrate improvement with classmates and mentors.</p>
+            <p><a class="btn btn-primary" href="points.html">Join the leaderboard</a></p>
           </div>
           <div class="col-md-5">
-            <svg aria-label="Placeholder: 500x500" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" preserveAspectRatio="xMidYMid slice" role="img" xmlns="http://www.w3.org/2000/svg">
-              <title>Placeholder</title>
-              <rect width="100%" height="100%" fill="var(--bs-secondary-bg)"></rect>
-              <text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text>
-            </svg>
+            <img src="images/cvc11.jpg" alt="Students collaborating in a learning community" class="featurette-image img-fluid mx-auto rounded shadow-sm">
           </div>
         </div>
 
@@ -293,15 +304,137 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="container">
-      <p class="float-end"><a href="#">Back to top</a></p>
-      <p id="bizcopy">&copy; 2017– eduqii, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    <footer class="container py-5 border-top">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <div class="d-flex align-items-center mb-2 mb-md-0">
+          <img src="images/eduqii_logo.png" alt="eduqii logo" height="28" class="me-2">
+          <span class="text-muted">&copy; eduqii, Inc. <span id="bizcopy"></span></span>
+        </div>
+        <div>
+          <a href="privacy.html" target="_blank" class="text-muted me-3">Privacy</a>
+          <a href="terms.html" target="_blank" class="text-muted me-3">Terms</a>
+          <a href="#" class="text-muted">Back to top</a>
+        </div>
+      </div>
     </footer>
 
+    <div class="modal fade" id="signupInfoModal" tabindex="-1" aria-labelledby="signupInfoLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="signupInfoLabel">Sign Up Information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h6>Getting started is easy</h6>
+            <p>Sign up today to unlock the full Eduqii experience and start learning with personalized tools.</p>
+            <ul>
+              <li><strong>Create your profile:</strong> Choose a username, add your goals, and personalize your dashboard.</li>
+              <li><strong>Explore tutorials:</strong> Access guided lessons, practice quizzes, and learning resources.</li>
+              <li><strong>Earn points:</strong> Track your progress and stay motivated with rewards.</li>
+            </ul>
+            <h6>What happens next</h6>
+            <p>After signing up, you can immediately:</p>
+            <ol>
+              <li>Complete a quick onboarding quiz.</li>
+              <li>View your personalized learning path.</li>
+              <li>Join challenges and track your performance.</li>
+            </ol>
+            <p class="mb-0">Ready to begin? Click “Continue” to start your signup journey and build your learning plan.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <a href="signup.html" class="btn btn-primary">Continue</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="adaDetailModal" tabindex="-1" aria-labelledby="adaDetailLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="adaDetailLabel">Ada Lovelace</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-md-4 text-center">
+                <img src="images/ada-lovelace.svg" class="img-fluid rounded-circle mb-3" alt="Ada Lovelace portrait">
+              </div>
+              <div class="col-md-8">
+                <p class="lead">Ada Lovelace (1815–1852) was an English mathematician and writer who is widely recognized as the first computer programmer.</p>
+                <p>She worked closely with Charles Babbage and translated his work on the Analytical Engine. Her notes included an algorithm designed to be processed by a machine, which is now considered the first published computer program.</p>
+              </div>
+            </div>
+            <hr>
+            <h6>Key contributions</h6>
+            <ul>
+              <li>Developed the first algorithm intended for a computing machine.</li>
+              <li>Predicted that computers could do more than calculate numbers, including composing music and creating graphics.</li>
+              <li>Introduced the idea of a machine that could manipulate symbols according to rules.</li>
+            </ul>
+            <h6>Legacy</h6>
+            <p>Ada's vision paved the way for modern computing and inspired generations of computer scientists. Today, Ada Lovelace Day celebrates women in STEM worldwide.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="civilisationModal" tabindex="-1" aria-labelledby="civilisationLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="civilisationLabel">Civilisation</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h6>Discover the story of civilisation</h6>
+            <p>Explore how communities, knowledge, and technology evolved over time to create the societies we live in today.</p>
+            <ul>
+              <li>Origins of writing, mathematics, and early science.</li>
+              <li>How innovation shaped politics, art, and communication.</li>
+              <li>The role of education and knowledge sharing across cultures.</li>
+            </ul>
+            <p>Understanding civilisation helps learners see how ideas build on one another and how past achievements continue to influence modern learning.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="worldModal" tabindex="-1" aria-labelledby="worldLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="worldLabel">The World</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h6>Connect with the world</h6>
+            <p>Learn about cultural diversity, global connections, and how knowledge travels across borders.</p>
+            <ul>
+              <li>Explore languages, traditions, and modern global challenges.</li>
+              <li>See how education bridges communities and supports collaboration.</li>
+              <li>Understand the importance of empathy, communication, and shared knowledge.</li>
+            </ul>
+            <p>This section highlights the value of thinking globally and embracing learning as a way to connect with others.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
     <script src="assets/dist/js/bootstrap.bundle.min.js" class="astro-vvvwv3sm"></script>
     <script>
       let myYear = new Date().getFullYear();
-      document.querySelector('#bizcopy').innerHTML = `&copy; 2017–${myYear} eduqii, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a>`;
+      document.querySelector('#bizcopy').innerHTML = `2017–${myYear}`;
     </script>
   </body>
 </html>
