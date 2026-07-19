@@ -4,79 +4,113 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<title>High School Crowns — Prom Leaders</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="features.css">
 	<style>
-		.crowns-container{max-width:1000px;margin:2rem auto;padding:0 1rem}
-		.crowns-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
-		.crown-card{border:1px solid #e4e4e4;border-radius:8px;padding:1rem;background:#fff}
-		.crown-card img{width:64px;height:64px;object-fit:cover;border-radius:50%}
-		.crown-header{display:flex;align-items:center;gap:0.75rem}
-		.crown-name{font-weight:700;margin:0}
-		.crown-role{color:#666;font-size:0.95rem;margin:0}
-		.crown-bio{margin-top:0.5rem;color:#333;font-size:0.95rem}
+		body { background: #f8fafc; color: #222; }
+		.crowns-wrap { max-width: 1100px; margin: 2.5rem auto; padding: 1rem; }
+		.page-lead { background: linear-gradient(90deg,#ffffff,#f7fcff); padding:1.25rem; border-radius:10px; box-shadow:0 6px 18px rgba(16,24,40,0.06); }
+		.crown-card { border: none; border-radius: .75rem; padding:1rem; background: #fff; box-shadow: 0 4px 14px rgba(16,24,40,0.04); }
+		.crown-avatar { width:72px; height:72px; object-fit:cover; border-radius:50%; }
+		.crown-role { color: #6b7280; font-size: .95rem; }
+		.crown-bio { color:#374151; margin-top:.5rem; }
+		.section-title { margin-top:1.5rem; margin-bottom: .75rem; }
+		.nominee-badge { font-size: .75rem; }
+		.crown-card:hover { transform: translateY(-4px); transition: transform .18s ease; }
 	</style>
 </head>
 <body>
-	<main class="crowns-container">
-		<h1>Prom King & Queen Leaders</h1>
-		<p>Recognizing this year's top nominees and leaders for Prom King and Prom Queen.</p>
+	<main class="crowns-wrap">
+		<div class="page-lead mb-3">
+			<div class="d-flex justify-content-between align-items-start">
+				<div>
+					<h1 class="h4 mb-1">Prom King &amp; Queen Leaders</h1>
+					<p class="mb-0 text-muted">Celebrating this year's nominees and outstanding student leaders.</p>
+				</div>
+				<div class="text-end">
+					<a href="../index.html" class="btn btn-sm btn-outline-secondary">Back to Home</a>
+				</div>
+			</div>
+		</div>
 
 		<section>
-			<h2>Prom King Leaders</h2>
-			<div class="crowns-grid">
-				<article class="crown-card">
-					<div class="crown-header">
-						<img src="../images/placeholder-profile.png" alt="Alex Rivera">
-						<div>
-							<p class="crown-name">Alex Rivera</p>
-							<p class="crown-role">Senior — Prom King Nominee</p>
+			<h2 class="h5 section-title">Prom King Leaders</h2>
+			<div class="row g-3">
+				<div class="col-sm-6">
+					<article class="crown-card d-flex gap-3 align-items-start">
+						<img class="crown-avatar" src="../images/leaderboard_international.png" alt="Alex Rivera">
+						<div class="flex-grow-1">
+							<div class="d-flex justify-content-between align-items-start">
+								<div>
+									<h3 class="h6 mb-0">Alex Rivera</h3>
+									<div class="crown-role">Senior <span class="badge bg-warning text-dark nomineebadge ms-2">Prom King Nominee</span></div>
+								</div>
+								<div class="text-end text-muted small">Class of 2026</div>
+							</div>
+							<p class="crown-bio small">Student body president, community volunteer, and captain of the debate team. Known for leading fundraising drives and school spirit initiatives.</p>
 						</div>
-					</div>
-					<p class="crown-bio">Student body president, community volunteer, and captain of the debate team. Known for leading fundraising drives and school spirit initiatives.</p>
-				</article>
+					</article>
+				</div>
 
-				<article class="crown-card">
-					<div class="crown-header">
-						<img src="../images/placeholder-profile.png" alt="Jordan Lee">
-						<div>
-							<p class="crown-name">Jordan Lee</p>
-							<p class="crown-role">Senior — Prom King Nominee</p>
+				<div class="col-sm-6">
+					<article class="crown-card d-flex gap-3 align-items-start">
+						<img class="crown-avatar" src="../images/highschool_image1.png" alt="Jordan Lee">
+						<div class="flex-grow-1">
+							<div class="d-flex justify-content-between align-items-start">
+								<div>
+									<h3 class="h6 mb-0">Jordan Lee</h3>
+									<div class="crown-role">Senior <span class="badge bg-warning text-dark nomineebadge ms-2">Prom King Nominee</span></div>
+								</div>
+								<div class="text-end text-muted small">Class of 2026</div>
+							</div>
+							<p class="crown-bio small">Varsity athlete and peer tutor who organized a mentorship program for underclassmen. Praised for inclusivity and teamwork.</p>
 						</div>
-					</div>
-					<p class="crown-bio">Varsity athlete and peer tutor who organized a mentorship program for underclassmen. Praised for inclusivity and teamwork.</p>
-				</article>
+					</article>
+				</div>
 			</div>
 		</section>
 
-		<section style="margin-top:1.5rem">
-			<h2>Prom Queen Leaders</h2>
-			<div class="crowns-grid">
-				<article class="crown-card">
-					<div class="crown-header">
-						<img src="../images/placeholder-profile.png" alt="Sofia Martinez">
-						<div>
-							<p class="crown-name">Sofia Martinez</p>
-							<p class="crown-role">Senior — Prom Queen Nominee</p>
+		<section>
+			<h2 class="h5 section-title">Prom Queen Leaders</h2>
+			<div class="row g-3">
+				<div class="col-sm-6">
+					<article class="crown-card d-flex gap-3 align-items-start">
+						<img class="crown-avatar" src="../images/cultural_experiences.png" alt="Sofia Martinez">
+						<div class="flex-grow-1">
+							<div class="d-flex justify-content-between align-items-start">
+								<div>
+									<h3 class="h6 mb-0">Sofia Martinez</h3>
+									<div class="crown-role">Senior <span class="badge bg-pink text-dark nomineebadge ms-2" style="background:#ffdce6;color:#6b2135">Prom Queen Nominee</span></div>
+								</div>
+								<div class="text-end text-muted small">Class of 2026</div>
+							</div>
+							<p class="crown-bio small">Lead in the arts program and founder of the school's mental-health awareness club. Recognized for kindness and creative leadership.</p>
 						</div>
-					</div>
-					<p class="crown-bio">Lead in the arts program and founder of the school's mental-health awareness club. Recognized for kindness and creative leadership.</p>
-				</article>
+					</article>
+				</div>
 
-				<article class="crown-card">
-					<div class="crown-header">
-						<img src="../images/placeholder-profile.png" alt="Taylor Nguyen">
-						<div>
-							<p class="crown-name">Taylor Nguyen</p>
-							<p class="crown-role">Senior — Prom Queen Nominee</p>
+				<div class="col-sm-6">
+					<article class="crown-card d-flex gap-3 align-items-start">
+						<img class="crown-avatar" src="../images/languages_communication.png" alt="Taylor Nguyen">
+						<div class="flex-grow-1">
+							<div class="d-flex justify-content-between align-items-start">
+								<div>
+									<h3 class="h6 mb-0">Taylor Nguyen</h3>
+									<div class="crown-role">Senior <span class="badge bg-pink text-dark nomineebadge ms-2" style="background:#ffdce6;color:#6b2135">Prom Queen Nominee</span></div>
+								</div>
+								<div class="text-end text-muted small">Class of 2026</div>
+							</div>
+							<p class="crown-bio small">Top scholar and president of the science club. Organized community STEM outreach and promotes academic mentorship.</p>
 						</div>
-					</div>
-					<p class="crown-bio">Top scholar and president of the science club. Organized community STEM outreach and promotes academic mentorship.</p>
-				</article>
+					</article>
+				</div>
 			</div>
 		</section>
 
-		<p style="margin-top:1.5rem;color:#555">To update leaders, edit this page and replace placeholder images in <strong>images/</strong> with student photos, and update names/bios as needed.</p>
+		<div class="mt-4 text-muted small">To update leaders, edit this page and replace placeholder images in <strong>images/</strong> with student photos, and update names/bios as needed.</div>
 	</main>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
 
