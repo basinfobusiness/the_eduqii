@@ -149,7 +149,7 @@
           <small class="text-muted">Sharpen your skills with practice quizzes</small>
         </div>
         <div>
-          <a href="#" class="btn btn-bd-primary">Create Quiz</a>
+          <a href="#" id="createQuizBtn" class="btn btn-bd-primary">Create Quiz</a>
         </div>
       </div>
 
@@ -224,6 +224,91 @@
         $(document).ready(function() {
             $('#leaderboard').DataTable();
         });
+    </script>
+    <!-- Timer Modal for Create Quiz -->
+    <div class="modal fade" id="timerModal" tabindex="-1" aria-labelledby="timerModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="timerModalLabel">Set Quiz Timer</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="quizMinutes" class="form-label">Duration (minutes)</label>
+              <input type="number" id="quizMinutes" class="form-control" min="1" step="1" value="10">
+            </div>
+            <div id="countdown" class="text-center h4" style="display:none">10:00</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" id="startQuizBtn" class="btn btn-primary">Start</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        var timerInterval = null;
+        var remaining = 0;
+
+        function formatTime(s){
+          var mm = Math.floor(s/60).toString().padStart(2,'0');
+          var ss = (s%60).toString().padStart(2,'0');
+          return mm + ':' + ss;
+        }
+
+        var createBtn = document.getElementById('createQuizBtn');
+        if (createBtn) {
+          createBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            // reset modal state
+            var minutesInput = document.getElementById('quizMinutes');
+            var countdownEl = document.getElementById('countdown');
+            minutesInput.disabled = false;
+            countdownEl.style.display = 'none';
+            countdownEl.textContent = formatTime(parseInt(minutesInput.value||10,10)*60);
+            var modalEl = document.getElementById('timerModal');
+            var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            modal.show();
+          });
+        }
+
+        var startBtn = document.getElementById('startQuizBtn');
+        if (startBtn) {
+          startBtn.addEventListener('click', function(){
+            var minutesInput = document.getElementById('quizMinutes');
+            var countdownEl = document.getElementById('countdown');
+            var modalEl = document.getElementById('timerModal');
+            var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            var mins = parseInt(minutesInput.value,10) || 10;
+            remaining = Math.max(1, mins) * 60;
+
+            // show countdown and disable input
+            minutesInput.disabled = true;
+            countdownEl.style.display = 'block';
+            countdownEl.textContent = formatTime(remaining);
+
+            // start interval
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(function(){
+              remaining -= 1;
+              countdownEl.textContent = formatTime(Math.max(0, remaining));
+              if (remaining <= 0) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                // notify user
+                countdownEl.textContent = 'Time up!';
+                setTimeout(function(){ modal.hide(); }, 1200);
+              }
+            }, 1000);
+
+            // Optionally: close the modal and start quiz navigation here
+            // For now we keep the modal visible to show the countdown
+          });
+        }
+      })();
     </script>
 </body>
 </html>
