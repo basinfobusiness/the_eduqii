@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Senior High Courses</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      .course-card { cursor: default; }
+      .pdf-iframe { width: 100%; height: 70vh; border: 0; }
+    </style>
+  </head>
+  <body>
+    <main class="container py-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h1 class="h4 mb-0">Courses</h1>
+          <small class="text-muted">Available courses for Senior High School</small>
+        </div>
+        <div>
+          <a href="../index.html" class="btn btn-sm btn-outline-secondary">Home</a>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card course-card">
+            <div class="card-body">
+              <h5 class="card-title">QBASIC Syntax</h5>
+              <p class="card-text">A beginner-friendly guide to QBASIC programming constructs and syntax.</p>
+              <div class="d-flex gap-2">
+                <button class="btn btn-primary btn-sm view-pdf" data-pdf="../assets/courses/QBASICSYNTAX.pdf">View Syllabus (PDF)</button>
+                <a class="btn btn-outline-secondary btn-sm" href="#">Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card course-card">
+            <div class="card-body">
+              <h5 class="card-title">Programming with Python</h5>
+              <p class="card-text">Introduction to Python programming: variables, control flow, functions, and modules.</p>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
+                <a class="btn btn-outline-secondary btn-sm" href="#">Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card course-card">
+            <div class="card-body">
+              <h5 class="card-title">Introduction to Programming</h5>
+              <p class="card-text">Core programming concepts suitable for first-time coders across languages.</p>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
+                <a class="btn btn-outline-secondary btn-sm" href="#">Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card course-card">
+            <div class="card-body">
+              <h5 class="card-title">Productivity Software</h5>
+              <p class="card-text">Learn Microsoft Access, Excel, PowerPoint and Word for efficient productivity.</p>
+              <ul>
+                <li>Microsoft Access — databases and forms</li>
+                <li>Microsoft Excel — spreadsheets and formulas</li>
+                <li>Microsoft PowerPoint — presentations</li>
+                <li>Microsoft Word — documents and formatting</li>
+              </ul>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
+                <a class="btn btn-outline-secondary btn-sm" href="#">Details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PDF Viewer Modal -->
+      <div class="modal fade" id="pdfViewerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="pdfViewerTitle">PDF Viewer</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+              <iframe id="pdfViewerFrame" class="pdf-iframe" src="" title="PDF viewer"></iframe>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <a id="pdfOpenNew" class="btn btn-primary" target="_blank" href="">Open in new tab</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      (function(){
+        var modalEl = document.getElementById('pdfViewerModal');
+        var modal = null;
+        var iframe = document.getElementById('pdfViewerFrame');
+        var titleEl = document.getElementById('pdfViewerTitle');
+        var openNew = document.getElementById('pdfOpenNew');
+
+        document.addEventListener('click', function(e){
+          var t = e.target;
+          if (t && t.classList && t.classList.contains('view-pdf')){
+            var pdf = t.dataset.pdf;
+            var name = t.closest('.card').querySelector('.card-title').textContent.trim();
+            if (!pdf) return;
+            titleEl.textContent = name + ' — Syllabus';
+            iframe.src = pdf;
+            openNew.href = pdf;
+            modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+            modal.show();
+          }
+        });
+
+        // clear iframe on close to stop loading
+        modalEl.addEventListener('hidden.bs.modal', function(){ iframe.src = ''; openNew.href = ''; titleEl.textContent = 'PDF Viewer'; });
+      })();
+    </script>
+  </body>
+</html>
