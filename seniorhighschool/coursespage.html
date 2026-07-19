@@ -30,7 +30,7 @@
               <p class="card-text">A beginner-friendly guide to QBASIC programming constructs and syntax.</p>
               <div class="d-flex gap-2">
                 <button class="btn btn-primary btn-sm view-pdf" data-pdf="../assets/courses/QBASICSYNTAX.pdf">View Syllabus (PDF)</button>
-                <a class="btn btn-outline-secondary btn-sm" href="#">Details</a>
+                <button class="btn btn-outline-secondary btn-sm view-details" data-course="QBASIC Syntax">Details</button>
               </div>
             </div>
           </div>
@@ -43,7 +43,7 @@
               <p class="card-text">Introduction to Python programming: variables, control flow, functions, and modules.</p>
               <div class="d-flex gap-2">
                 <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
-                <a class="btn btn-outline-secondary btn-sm" href="#">Details</a>
+                <button class="btn btn-outline-secondary btn-sm view-details" data-course="Programming with Python">Details</button>
               </div>
             </div>
           </div>
@@ -56,7 +56,7 @@
               <p class="card-text">Core programming concepts suitable for first-time coders across languages.</p>
               <div class="d-flex gap-2">
                 <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
-                <a class="btn btn-outline-secondary btn-sm" href="#">Details</a>
+                <button class="btn btn-outline-secondary btn-sm view-details" data-course="Introduction to Programming">Details</button>
               </div>
             </div>
           </div>
@@ -75,7 +75,7 @@
               </ul>
               <div class="d-flex gap-2">
                 <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
-                <a class="btn btn-outline-secondary btn-sm" href="#">Details</a>
+                <button class="btn btn-outline-secondary btn-sm view-details" data-course="Productivity Software">Details</button>
               </div>
             </div>
           </div>
@@ -101,6 +101,19 @@
         </div>
       </div>
 
+      <!-- Course Details Offcanvas -->
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="courseDetailsOffcanvas" aria-labelledby="courseDetailsOffcanvasLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="courseDetailsOffcanvasLabel">Course Details</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <h5 id="offcanvasCourseTitle"></h5>
+          <p id="offcanvasCourseDescription" class="text-muted"></p>
+          <div id="offcanvasCourseExtra"></div>
+        </div>
+      </div>
+
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -123,6 +136,41 @@
             openNew.href = pdf;
             modal = bootstrap.Modal.getOrCreateInstance(modalEl);
             modal.show();
+            return;
+          }
+
+          if (t && t.classList && t.classList.contains('view-details')){
+            var courseKey = t.dataset.course;
+            var courseInfo = {
+              'QBASIC Syntax': {
+                title: 'QBASIC Syntax',
+                description: 'A beginner-friendly guide to QBASIC programming constructs and syntax.',
+                extra: '<ul class="list-unstyled"><li><strong>Topics:</strong> Variables, loops, subroutines, input/output</li><li><strong>Format:</strong> Practice examples and mini-projects</li><li><strong>Audience:</strong> beginners</li></ul>'
+              },
+              'Programming with Python': {
+                title: 'Programming with Python',
+                description: 'Introduction to Python programming: variables, control flow, functions, and modules.',
+                extra: '<ul class="list-unstyled"><li><strong>Topics:</strong> Syntax, data types, control flow, functions</li><li><strong>Format:</strong> Hands-on exercises with code samples</li><li><strong>Audience:</strong> first-time programmers</li></ul>'
+              },
+              'Introduction to Programming': {
+                title: 'Introduction to Programming',
+                description: 'Core programming concepts suitable for first-time coders across languages.',
+                extra: '<ul class="list-unstyled"><li><strong>Topics:</strong> Algorithms, logic, problem solving, pseudocode</li><li><strong>Format:</strong> Conceptual lessons plus practical examples</li><li><strong>Audience:</strong> new learners</li></ul>'
+              },
+              'Productivity Software': {
+                title: 'Productivity Software',
+                description: 'Learn Microsoft Access, Excel, PowerPoint and Word for efficient productivity.',
+                extra: '<ul class="list-unstyled"><li><strong>Topics:</strong> Database design, spreadsheets, slides, documents</li><li><strong>Format:</strong> Project-led tutorials and real-world tasks</li><li><strong>Audience:</strong> students and office users</li></ul>'
+              }
+            };
+            var details = courseInfo[courseKey] || { title: courseKey, description: 'More information is coming soon.', extra: '' };
+            document.getElementById('offcanvasCourseTitle').textContent = details.title;
+            document.getElementById('offcanvasCourseDescription').textContent = details.description;
+            document.getElementById('offcanvasCourseExtra').innerHTML = details.extra;
+            var offcanvasEl = document.getElementById('courseDetailsOffcanvas');
+            var offcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
+            offcanvas.show();
+            return;
           }
         });
 
