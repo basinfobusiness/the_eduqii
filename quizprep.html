@@ -152,6 +152,7 @@
           <a href="#" id="createQuizBtn" class="btn btn-bd-primary">Create Quiz</a>
         </div>
       </div>
+      <div id="alerts" class="mt-3"></div>
 
       <div class="row g-3 mb-4">
         <div class="col-md-4">
@@ -166,6 +167,31 @@
               </ul>
             </div>
           </div>
+            <!-- Upcoming quizzes -->
+            <div class="row g-3 mt-4">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-body p-2">
+                    <h5 class="card-title mb-2">Upcoming Quizzes</h5>
+                    <div class="table-responsive">
+                      <table class="table table-sm table-striped" id="upcoming">
+                        <thead>
+                          <tr>
+                            <th>Quiz</th>
+                            <th>Subject</th>
+                            <th>Start</th>
+                            <th>Forecast</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
 
         <div class="col-md-8">
@@ -222,7 +248,8 @@
     <!-- <script src="https://cdn.datatables.net/2.3.8/js/dataTables.dataTables.min.js"></script> -->
     <script>
         $(document).ready(function() {
-            $('#leaderboard').DataTable();
+        try { $('#leaderboard').DataTable(); } catch(e) {}
+        try { $('#upcoming').DataTable({ pageLength: 5, lengthChange: false, searching: false }); } catch(e) {}
         });
     </script>
     <!-- Timer Modal for Create Quiz -->
@@ -392,6 +419,26 @@
               var tr = document.createElement('tr');
               tr.innerHTML = '<td>' + escapeHtml(title) + '</td><td>' + escapeHtml(subject) + '</td><td>' + qs + '</td><td>' + dur + 'm</td><td>' + escapeHtml(diff) + '</td><td><button class="btn btn-sm btn-primary start-quiz" data-title="' + escapeHtml(title) + '" data-start="2026-08-21T00:00" data-forecast="">Start</button></td>';
               tbody.appendChild(tr);
+
+              // show success alert
+              var alerts = document.getElementById('alerts');
+              if (alerts){
+                var a = document.createElement('div');
+                a.className = 'alert alert-success alert-dismissible fade show';
+                a.role = 'alert';
+                a.innerHTML = '<strong>Success:</strong> Quiz "' + escapeHtml(title) + '" created.' + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+                alerts.appendChild(a);
+                setTimeout(function(){ try{ var bsAlert = bootstrap.Alert.getOrCreateInstance(a); bsAlert.close(); } catch(e){} }, 4000);
+              }
+
+              // add to Upcoming DataTable (if present)
+              try{
+                var startStr = '2026-08-21T00:00';
+                var startDisplay = startStr.replace('T',' ');
+                var forecast = '';
+                var up = $('#upcoming').DataTable();
+                up.row.add([escapeHtml(title), escapeHtml(subject), startDisplay, forecast, '<button class="btn btn-sm btn-primary start-quiz" data-title="' + escapeHtml(title) + '" data-start="' + startStr + '" data-forecast="' + forecast + '">Start</button>']).draw(false);
+              } catch(e){}
             }
 
             // close modal
