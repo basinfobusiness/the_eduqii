@@ -234,11 +234,16 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="mb-3">
-              <label for="quizMinutes" class="form-label">Duration (minutes)</label>
-              <input type="number" id="quizMinutes" class="form-control" min="1" step="1" value="10">
-            </div>
-            <div id="countdown" class="text-center h4" style="display:none">10:00</div>
+              <div class="mb-3">
+                <label for="quizMinutes" class="form-label">Duration (minutes)</label>
+                <input type="number" id="quizMinutes" class="form-control" min="1" step="1" value="10">
+              </div>
+              <div class="mb-3">
+                <label for="quizStart" class="form-label">Start date & time</label>
+                <input type="datetime-local" id="quizStart" class="form-control">
+                <div id="availabilityMsg" class="form-text text-danger mt-1" style="display:none"></div>
+              </div>
+              <div id="countdown" class="text-center h4" style="display:none">10:00</div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -269,6 +274,11 @@
             minutesInput.disabled = false;
             countdownEl.style.display = 'none';
             countdownEl.textContent = formatTime(parseInt(minutesInput.value||10,10)*60);
+            // set start date default to August 21, 2026
+            var startInput = document.getElementById('quizStart');
+            var defaultStart = '2026-08-21T00:00';
+            try { startInput.value = defaultStart; } catch (e) {}
+            updateStartButtonState();
             var modalEl = document.getElementById('timerModal');
             var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
             modal.show();
@@ -276,6 +286,41 @@
         }
 
         var startBtn = document.getElementById('startQuizBtn');
+        function parseLocalDateValue(val) {
+          if (!val) return null;
+          // datetime-local gives local time without timezone; construct Date accordingly
+          var d = new Date(val);
+          if (!isNaN(d.getTime())) return d;
+          // fallback parse
+          return new Date(val.replace('T',' '));
+        }
+
+        function updateStartButtonState(){
+          var startInput = document.getElementById('quizStart');
+          var availabilityMsg = document.getElementById('availabilityMsg');
+          var startBtn = document.getElementById('startQuizBtn');
+          var startDate = parseLocalDateValue(startInput.value);
+          var now = new Date();
+          if (!startDate) {
+            startBtn.disabled = false;
+            availabilityMsg.style.display = 'none';
+            return;
+          }
+          if (now.getTime() < startDate.getTime()){
+            startBtn.disabled = true;
+            availabilityMsg.style.display = 'block';
+            availabilityMsg.textContent = 'Quiz will be available on ' + startDate.toLocaleString();
+          } else {
+            startBtn.disabled = false;
+            availabilityMsg.style.display = 'none';
+          }
+        }
+
+        var startInputEl = document.getElementById('quizStart');
+        if (startInputEl) {
+          startInputEl.addEventListener('change', updateStartButtonState);
+        }
+
         if (startBtn) {
           startBtn.addEventListener('click', function(){
             var minutesInput = document.getElementById('quizMinutes');
@@ -285,8 +330,17 @@
             var mins = parseInt(minutesInput.value,10) || 10;
             remaining = Math.max(1, mins) * 60;
 
+            // ensure start date has arrived
+            var startInput = document.getElementById('quizStart');
+            var startDate = parseLocalDateValue(startInput.value);
+            if (startDate && (new Date()).getTime() < startDate.getTime()){
+              // shouldn't happen because button disabled, but guard anyway
+              return;
+            }
+
             // show countdown and disable input
             minutesInput.disabled = true;
+            if (startInput) startInput.disabled = true;
             countdownEl.style.display = 'block';
             countdownEl.textContent = formatTime(remaining);
 
@@ -303,9 +357,6 @@
                 setTimeout(function(){ modal.hide(); }, 1200);
               }
             }, 1000);
-
-            // Optionally: close the modal and start quiz navigation here
-            // For now we keep the modal visible to show the countdown
           });
         }
       })();
