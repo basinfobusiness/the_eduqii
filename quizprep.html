@@ -396,55 +396,78 @@
         }
 
         // handle Create Quiz form submission with subject restriction
-        var createForm = document.getElementById('createQuizForm');
-        if (createForm){
-          createForm.addEventListener('submit', function(e){
-            e.preventDefault();
-            var title = document.getElementById('newQuizTitle').value.trim();
-            var subject = document.getElementById('newQuizSubject').value.trim();
-            var qs = parseInt(document.getElementById('newQuizQuestions').value,10) || 10;
-            var dur = parseInt(document.getElementById('newQuizDuration').value,10) || 10;
-            var diff = document.getElementById('newQuizDifficulty').value;
-            var allowed = ['Computing','Engineering','Science'];
-            var msgEl = document.getElementById('createFormMsg');
-            if (allowed.indexOf(subject) === -1){
-              msgEl.textContent = 'Quizzes can only be created for Computing, Engineering, or Science subjects.';
-              msgEl.style.display = 'block';
-              return;
-            }
-
-            // add new quiz row to table
-            var tbody = document.querySelector('#quizzes tbody');
-            if (tbody){
-              var tr = document.createElement('tr');
-              tr.innerHTML = '<td>' + escapeHtml(title) + '</td><td>' + escapeHtml(subject) + '</td><td>' + qs + '</td><td>' + dur + 'm</td><td>' + escapeHtml(diff) + '</td><td><button class="btn btn-sm btn-primary start-quiz" data-title="' + escapeHtml(title) + '" data-start="2026-08-21T00:00" data-forecast="">Start</button></td>';
-              tbody.appendChild(tr);
-
-              // show success alert
-              var alerts = document.getElementById('alerts');
-              if (alerts){
-                var a = document.createElement('div');
-                a.className = 'alert alert-success alert-dismissible fade show';
-                a.role = 'alert';
-                a.innerHTML = '<strong>Success:</strong> Quiz "' + escapeHtml(title) + '" created.' + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
-                alerts.appendChild(a);
-                setTimeout(function(){ try{ var bsAlert = bootstrap.Alert.getOrCreateInstance(a); bsAlert.close(); } catch(e){} }, 4000);
-              }
-
-              // add to Upcoming DataTable (if present)
-              try{
-                var startStr = '2026-08-21T00:00';
-                var startDisplay = startStr.replace('T',' ');
-                var forecast = '';
-                var up = $('#upcoming').DataTable();
-                up.row.add([escapeHtml(title), escapeHtml(subject), startDisplay, forecast, '<button class="btn btn-sm btn-primary start-quiz" data-title="' + escapeHtml(title) + '" data-start="' + startStr + '" data-forecast="' + forecast + '">Start</button>']).draw(false);
-              } catch(e){}
-            }
-
-            // close modal
-            try{ var cmodal = bootstrap.Modal.getOrCreateInstance(document.getElementById('createQuizModal')); cmodal.hide(); } catch(e){}
-          });
+        // Upcoming quizzes persistence and table helpers
+        function loadUpcoming(){
+          try{ return JSON.parse(localStorage.getItem('upcomingQuizzes')||'[]'); }catch(e){return []}
         }
+        function saveUpcoming(list){
+          try{ localStorage.setItem('upcomingQuizzes', JSON.stringify(list||[])); }catch(e){}
+        }
+        function addUpcomingToTable(obj){
+          try{
+            var up = $('#upcoming').DataTable();
+            var startDisplay = (obj.start||'').replace('T',' ');
+            var forecast = obj.forecast||'';
+            up.row.add([escapeHtml(obj.title), escapeHtml(obj.subject), startDisplay, forecast, '<button class="btn btn-sm btn-primary start-quiz" data-title="' + escapeHtml(obj.title) + '" data-start="' + (obj.start||'2026-08-21T00:00') + '" data-forecast="' + (forecast) + '">Start</button>']).draw(false);
+          }catch(e){}
+        }
+
+        // populate upcoming table from storage
+        try{
+          var existing = loadUpcoming();
+          (existing||[]).forEach(function(r){ addUpcomingToTable(r); });
+        }catch(e){}
+
+        // delegated handler for create form (form may be after this script)
+        $(document).on('submit','#createQuizForm', function(e){
+          e.preventDefault();
+          var title = (document.getElementById('newQuizTitle')||{}).value.trim();
+          var subject = (document.getElementById('newQuizSubject')||{}).value.trim();
+          var qs = parseInt((document.getElementById('newQuizQuestions')||{}).value,10) || 10;
+          var dur = parseInt((document.getElementById('newQuizDuration')||{}).value,10) || 10;
+          var diff = (document.getElementById('newQuizDifficulty')||{}).value || '';
+          var allowed = ['Computing','Engineering','Science'];
+          var msgEl = document.getElementById('createFormMsg');
+          if (allowed.indexOf(subject) === -1){
+            if (msgEl){ msgEl.textContent = 'Quizzes can only be created for Computing, Engineering, or Science subjects.'; msgEl.style.display = 'block'; }
+            return;
+          }
+
+          // add new quiz row to main table
+          var tbody = document.querySelector('#quizzes tbody');
+          if (tbody){
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td>' + escapeHtml(title) + '</td><td>' + escapeHtml(subject) + '</td><td>' + qs + '</td><td>' + dur + 'm</td><td>' + escapeHtml(diff) + '</td><td><button class="btn btn-sm btn-primary start-quiz" data-title="' + escapeHtml(title) + '" data-start="2026-08-21T00:00" data-forecast="">Start</button></td>';
+            tbody.appendChild(tr);
+          }
+
+          // build upcoming quiz object
+          var obj = { title: title, subject: subject, questions: qs, duration: dur, difficulty: diff, start: '2026-08-21T00:00', forecast: '' };
+
+          // persist to localStorage
+          try{
+            var list = loadUpcoming();
+            list.push(obj);
+            saveUpcoming(list);
+          }catch(e){}
+
+          // add to upcoming DataTable
+          addUpcomingToTable(obj);
+
+          // show success alert
+          var alerts = document.getElementById('alerts');
+          if (alerts){
+            var a = document.createElement('div');
+            a.className = 'alert alert-success alert-dismissible fade show';
+            a.role = 'alert';
+            a.innerHTML = '<strong>Success:</strong> Quiz "' + escapeHtml(title) + '" created.' + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+            alerts.appendChild(a);
+            setTimeout(function(){ try{ var bsAlert = bootstrap.Alert.getOrCreateInstance(a); bsAlert.close(); } catch(e){} }, 4000);
+          }
+
+          // close modal
+          try{ var cmodal = bootstrap.Modal.getOrCreateInstance(document.getElementById('createQuizModal')); cmodal.hide(); } catch(e){}
+        });
 
         function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
       })();
