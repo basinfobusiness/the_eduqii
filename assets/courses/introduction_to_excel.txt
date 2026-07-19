@@ -1,0 +1,196 @@
+**Functions**
+
+Functions in Excel are built-in (ready-made) formulas used to perform calculations. 
+
+These functions make it easier to perform calculations and analyses data in Excel. For 
+
+example, if you are to add values in cells ranging from A1 to A20, a function can be 
+
+used to reduce the stress of repeating individual cells in the formula. So instead of 
+
+=A1+A2+A3+A4+A5……A20, you can use =SUM (A1:A20) to find the total of 
+
+values in cell A1 to A20
+
+
+
+s/n Key Point Explanation Example
+
+1 Equal sign It indicates the start of a formula 
+
+or function in Excel. When you 
+
+type = at the beginning of a cell, 
+
+Excel understands that you are 
+
+entering a formula or function, 
+
+and it will calculate the result 
+
+based on the expression that 
+
+follows.
+
+=PRODUCT(B5, A5): with 
+
+the equal sign beginning this 
+
+function, excel understands that 
+
+you want to multiply values of 
+
+B5 and A5 so it will calculate the 
+
+result for you.
+
+2 Function 
+
+name
+
+It is the word you use to tell 
+
+Excel the kind of calculation or 
+
+task you want to perform. Each 
+
+function name represents a 
+
+specific action
+
+= SUM (A1:A10): “SUM” is a 
+
+function name for addition. This 
+
+function formula will add all 
+
+values from A1 to A10.
+
+2 Arguments These are the inputs you provide 
+
+to the function, such as numbers, 
+
+cell references, ranges, or text
+
+Some functions require only 
+
+one argument while others take 
+
+multiple arguments.
+
+=AVERAGE (M1:M10): A range 
+
+of cells from M1 to M10 (the 
+
+numbers for which you want to 
+
+find the average).
+
+=IF (B1 > 50, “Pass”, “Fail”): in 
+
+this argument, excel will check if 
+
+B1 is greater than 50 then record 
+
+pass else it will record fail
+
+&#x20;
+
+**Types of Functions**
+
+Types Examples Explanation
+
+1\. Mathematical 
+
+Functions
+
+=SUM(B1:B12) Adds up values in B to B12
+
+=AVERAGE(B1:B12) Calculates the average of 
+
+numbers
+
+=PRODUCT(B1, B1) Multiplies values in B1 and B12
+
+=SQRT(D4) It will find the square root of 
+
+the value in cell D4.
+
+2 Statistical 
+
+Functions
+
+=MAX(G1:C6) Gives you the highest number 
+
+from G1 to G6.
+
+=MIN(D1:D5) Shows the smallest number 
+
+from D1 to D5.
+
+
+
+=COUNT(C1: D12) This will count all the number 
+
+of cells (it will count only 
+
+numbers) specified C1 to D12
+
+3 Text 
+
+Functions
+
+=CONCATENATE(A1, 
+
+“ “, B1)
+
+Combines the text in A1 and B1 
+
+with a space in between.
+
+=UPPER(D3) Changes text from lowercase letters 
+
+in cell D3to uppercase letters.
+
+4 Logical 
+
+Functions
+
+=IF(D5 > 50, “Pass”, 
+
+“Fail”)
+
+Checks if D1 is greater than 50 and 
+
+returns “Pass” or “Fail.”
+
+=AND(G1 > 0, G1 < 100) returns TRUE if G1 is between 0 
+
+and 100.
+
+5 Date and Time 
+
+Functions
+
+=TODAY() Returns the current date. This 
+
+function will show today’s date.
+
+=DATEDIF(A1, B1, “D”) It finds the number of days between 
+
+the dates in A1 and B1. This 
+
+function calculates the difference 
+
+between two dates
+
+
+
+
+
+\#DEBUGGING AND TROUBLESHOOTING 
+
+FORMULAS AND FUNCTIONS
+
+
+
