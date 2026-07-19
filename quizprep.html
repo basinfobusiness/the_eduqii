@@ -282,20 +282,14 @@
         if (createBtn) {
           createBtn.addEventListener('click', function(e){
             e.preventDefault();
-            // reset modal state
-            var minutesInput = document.getElementById('quizMinutes');
-            var countdownEl = document.getElementById('countdown');
-            minutesInput.disabled = false;
-            countdownEl.style.display = 'none';
-            countdownEl.textContent = formatTime(parseInt(minutesInput.value||10,10)*60);
-            // set start date default to August 21, 2026
-            var startInput = document.getElementById('quizStart');
-            var defaultStart = '2026-08-21T00:00';
-            try { startInput.value = defaultStart; } catch (e) {}
-            updateStartButtonState();
-            var modalEl = document.getElementById('timerModal');
-            var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-            modal.show();
+            // open Create Quiz modal
+            var cmodalEl = document.getElementById('createQuizModal');
+            var cmodal = bootstrap.Modal.getOrCreateInstance(cmodalEl);
+            // reset form
+            var form = document.getElementById('createQuizForm');
+            if (form) form.reset();
+            var msg = document.getElementById('createFormMsg'); if (msg) msg.style.display='none';
+            cmodal.show();
           });
         }
 
@@ -373,6 +367,39 @@
             }, 1000);
           });
         }
+
+        // handle Create Quiz form submission with subject restriction
+        var createForm = document.getElementById('createQuizForm');
+        if (createForm){
+          createForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            var title = document.getElementById('newQuizTitle').value.trim();
+            var subject = document.getElementById('newQuizSubject').value.trim();
+            var qs = parseInt(document.getElementById('newQuizQuestions').value,10) || 10;
+            var dur = parseInt(document.getElementById('newQuizDuration').value,10) || 10;
+            var diff = document.getElementById('newQuizDifficulty').value;
+            var allowed = ['Computing','Engineering','Science'];
+            var msgEl = document.getElementById('createFormMsg');
+            if (allowed.indexOf(subject) === -1){
+              msgEl.textContent = 'Quizzes can only be created for Computing, Engineering, or Science subjects.';
+              msgEl.style.display = 'block';
+              return;
+            }
+
+            // add new quiz row to table
+            var tbody = document.querySelector('#quizzes tbody');
+            if (tbody){
+              var tr = document.createElement('tr');
+              tr.innerHTML = '<td>' + escapeHtml(title) + '</td><td>' + escapeHtml(subject) + '</td><td>' + qs + '</td><td>' + dur + 'm</td><td>' + escapeHtml(diff) + '</td><td><button class="btn btn-sm btn-primary start-quiz" data-title="' + escapeHtml(title) + '" data-start="2026-08-21T00:00" data-forecast="">Start</button></td>';
+              tbody.appendChild(tr);
+            }
+
+            // close modal
+            try{ var cmodal = bootstrap.Modal.getOrCreateInstance(document.getElementById('createQuizModal')); cmodal.hide(); } catch(e){}
+          });
+        }
+
+        function escapeHtml(s){ return (s+'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
       })();
     </script>
     <!-- Availability Modal -->
@@ -391,6 +418,56 @@
             <button type="button" id="setReminderBtn" class="btn btn-primary">Set Reminder</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Quiz Modal (with subject restriction) -->
+    <div class="modal fade" id="createQuizModal" tabindex="-1" aria-labelledby="createQuizModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <form id="createQuizForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="createQuizModalLabel">Create Quiz</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Title</label>
+                  <input id="newQuizTitle" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Subject</label>
+                  <select id="newQuizSubject" class="form-select" required>
+                    <option value="">Select...</option>
+                    <option>Computing</option>
+                    <option>Engineering</option>
+                    <option>Science</option>
+                    <option>Mathematics</option>
+                    <option>English</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Questions</label>
+                  <input id="newQuizQuestions" type="number" class="form-control" value="10" min="1">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Duration (minutes)</label>
+                  <input id="newQuizDuration" type="number" class="form-control" value="10" min="1">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Difficulty</label>
+                  <select id="newQuizDifficulty" class="form-select"><option>Easy</option><option>Medium</option><option>Hard</option></select>
+                </div>
+              </div>
+              <div id="createFormMsg" class="mt-3 text-danger" style="display:none"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" id="createQuizSubmit" class="btn btn-primary">Create Quiz</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
