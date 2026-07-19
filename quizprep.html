@@ -190,7 +190,7 @@
                       <td>20</td>
                       <td>15m</td>
                       <td>Easy</td>
-                      <td><button class="btn btn-sm btn-primary">Start</button></td>
+                      <td><button class="btn btn-sm btn-primary start-quiz" data-title="Algebra Basics" data-start="2026-08-21T09:00" data-forecast="120">Start</button></td>
                     </tr>
                     <tr>
                       <td>World Geography</td>
@@ -198,7 +198,7 @@
                       <td>15</td>
                       <td>12m</td>
                       <td>Medium</td>
-                      <td><button class="btn btn-sm btn-primary">Start</button></td>
+                      <td><button class="btn btn-sm btn-primary start-quiz" data-title="World Geography" data-start="2026-08-21T10:00" data-forecast="85">Start</button></td>
                     </tr>
                     <tr>
                       <td>Grammar Practice</td>
@@ -206,7 +206,7 @@
                       <td>25</td>
                       <td>20m</td>
                       <td>Medium</td>
-                      <td><button class="btn btn-sm btn-primary">Start</button></td>
+                      <td><button class="btn btn-sm btn-primary start-quiz" data-title="Grammar Practice" data-start="2026-08-21T11:00" data-forecast="60">Start</button></td>
                     </tr>
                   </tbody>
                 </table>
@@ -244,6 +244,7 @@
                 <div id="availabilityMsg" class="form-text text-danger mt-1" style="display:none"></div>
               </div>
               <div id="countdown" class="text-center h4" style="display:none">10:00</div>
+              <div id="forecastInfo" class="text-center small text-muted mt-2" style="display:none">Forecasted students: 0</div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -253,7 +254,8 @@
       </div>
     </div>
 
-    <script>
+        <script src="assets/js/quiz-storage.js"></script>
+        <script>
       (function(){
         var timerInterval = null;
         var remaining = 0;
@@ -359,6 +361,139 @@
             }, 1000);
           });
         }
+</script>
+      })();
+    </script>
+    <!-- Availability Modal -->
+    <div class="modal fade" id="availabilityModal" tabindex="-1" aria-labelledby="availabilityModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="availabilityModalLabel">Quiz Not Yet Available</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p id="availMessage">This quiz will be available on ...</p>
+            <p id="availForecast" class="small text-muted" style="display:none"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="setReminderBtn" class="btn btn-primary">Set Reminder</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        // Use shared quizStorage when available
+        var scheduledReminders = {};
+
+        // click handler for quiz Start
+        $(document).on('click', '.start-quiz', function(e){
+          e.preventDefault();
+          var btn = $(this);
+          var start = btn.data('start');
+          var title = btn.data('title') || 'Quiz';
+          var forecast = btn.data('forecast') || '';
+
+          // persist forecast for analytics/lookup (site-wide)
+          if (window.quizStorage && typeof window.quizStorage.saveForecast === 'function') {
+            window.quizStorage.saveForecast(title, forecast);
+          } else {
+            try { var map = JSON.parse(localStorage.getItem('quizForecasts')||'{}'); map[title]=forecast||''; localStorage.setItem('quizForecasts', JSON.stringify(map)); } catch(e){}
+          }
+
+          if (start) {
+            var sd = new Date(start);
+            if (!isNaN(sd.getTime()) && (new Date()).getTime() < sd.getTime()){
+              // show availability modal with option to set reminder
+              document.getElementById('availMessage').textContent = '"' + title + '" will be available on ' + sd.toLocaleString() + '.';
+              var af = document.getElementById('availForecast');
+              if (forecast) { af.textContent = 'Forecasted students: ' + forecast; af.style.display = 'block'; } else { af.style.display = 'none'; }
+              // attach current quiz data to the Set Reminder button
+              var setBtn = document.getElementById('setReminderBtn');
+              setBtn.dataset.title = title;
+              setBtn.dataset.start = sd.toISOString();
+              setBtn.dataset.forecast = forecast;
+              var availModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('availabilityModal'));
+              availModal.show();
+              return;
+            }
+          }
+
+          // otherwise open timer modal as before
+          var minsText = btn.closest('tr').find('td').eq(3).text().trim();
+          var mins = parseInt((minsText||'').replace(/[^\d]/g,''),10) || 10;
+          $('#timerModal #quizMinutes').val(mins);
+          $('#timerModal #quizStart').val(start || '2026-08-21T00:00');
+          if (forecast) { $('#forecastInfo').text('Forecasted students: ' + forecast).show(); } else { $('#forecastInfo').hide(); }
+          var modalEl = document.getElementById('timerModal');
+          var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+          modal.show();
+        });
+
+        // Set Reminder button
+        document.addEventListener('click', function(ev){
+          var t = ev.target;
+          if (t && t.id === 'setReminderBtn'){
+            var title = t.dataset.title || '';
+            var startIso = t.dataset.start || '';
+            var forecast = t.dataset.forecast || '';
+            if (!title || !startIso) return;
+            var startDate = new Date(startIso);
+            var reminder = { title: title, start: startIso, forecast: forecast };
+            if (window.quizStorage && typeof window.quizStorage.saveReminder === 'function') {
+              window.quizStorage.saveReminder(reminder);
+            } else {
+              try { var list = JSON.parse(localStorage.getItem('quizReminders')||'[]'); list.push(reminder); localStorage.setItem('quizReminders', JSON.stringify(list)); } catch(e){}
+            }
+            // schedule in-page reminder if possible via quizStorage or local
+            var id = title + '::' + startIso;
+            if (!isNaN(startDate.getTime())){
+              if (window.quizStorage && typeof window.quizStorage.scheduleInPageReminder === 'function'){
+                window.quizStorage.scheduleInPageReminder(id, startDate, title, function(id,title){
+                  document.getElementById('availMessage').textContent = 'Reminder: "' + title + '" is now available.';
+                  document.getElementById('availForecast').style.display = 'none';
+                  var availModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('availabilityModal'));
+                  availModal.show();
+                });
+              } else {
+                var now = new Date();
+                var ms = startDate.getTime() - now.getTime();
+                var max = 2147483647;
+                if (ms>0 && ms<=max){ scheduledReminders[id] = setTimeout(function(){ document.getElementById('availMessage').textContent = 'Reminder: "' + title + '" is now available.'; document.getElementById('availForecast').style.display = 'none'; var availModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('availabilityModal')); availModal.show(); }, ms); }
+              }
+            }
+            // feedback to user
+            var setBtn = document.getElementById('setReminderBtn');
+            setBtn.textContent = 'Reminder Set';
+            setBtn.classList.remove('btn-primary');
+            setBtn.classList.add('btn-success');
+            setTimeout(function(){
+              try { var availModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('availabilityModal')); availModal.hide(); } catch(e){}
+            }, 1200);
+          }
+        });
+
+        // load saved reminders and schedule in-page notifications (if possible)
+        try {
+          var saved = (window.quizStorage && typeof window.quizStorage.getReminders==='function') ? window.quizStorage.getReminders() : JSON.parse(localStorage.getItem('quizReminders')||'[]');
+          (saved||[]).forEach(function(r){
+            var s = new Date(r.start);
+            if (!isNaN(s.getTime())){
+              var id = r.title + '::' + r.start;
+              if (window.quizStorage && typeof window.quizStorage.scheduleInPageReminder === 'function'){
+                window.quizStorage.scheduleInPageReminder(id, s, r.title, function(id,title){ document.getElementById('availMessage').textContent = 'Reminder: "' + title + '" is now available.'; document.getElementById('availForecast').style.display = 'none'; var availModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('availabilityModal')); availModal.show(); });
+              } else {
+                var now = new Date();
+                var ms = s.getTime() - now.getTime();
+                var max = 2147483647;
+                if (ms>0 && ms<=max){ scheduledReminders[id] = setTimeout(function(){ document.getElementById('availMessage').textContent = 'Reminder: "' + r.title + '" is now available.'; document.getElementById('availForecast').style.display = 'none'; var availModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('availabilityModal')); availModal.show(); }, ms); }
+              }
+            }
+          });
+        } catch(e){}
       })();
     </script>
 </body>
