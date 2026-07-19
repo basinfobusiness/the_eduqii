@@ -210,21 +210,21 @@
                   <td>Platform</td>
                   <td>10m</td>
                   <td>Beginner</td>
-                  <td><a class="btn btn-sm btn-outline-primary" href="#">Open</a></td>
+                  <td><a class="btn btn-sm btn-outline-primary open-tutorial" href="#" data-title="Using the Dashboard" data-category="Platform" data-time="10m" data-level="Beginner" data-description="Overview of dashboard features and how to navigate your learning space.">Open</a></td>
                 </tr>
                 <tr>
                   <td>Note-taking Techniques</td>
                   <td>Study Skills</td>
                   <td>12m</td>
                   <td>All</td>
-                  <td><a class="btn btn-sm btn-outline-primary" href="#">Open</a></td>
+                  <td><a class="btn btn-sm btn-outline-primary open-tutorial" href="#" data-title="Note-taking Techniques" data-category="Study Skills" data-time="12m" data-level="All" data-description="Methods for efficient note-taking that improve retention and review.">Open</a></td>
                 </tr>
                 <tr>
                   <td>Time Management</td>
                   <td>Productivity</td>
                   <td>8m</td>
                   <td>Intermediate</td>
-                  <td><a class="btn btn-sm btn-outline-primary" href="#">Open</a></td>
+                  <td><a class="btn btn-sm btn-outline-primary open-tutorial" href="#" data-title="Time Management" data-category="Productivity" data-time="8m" data-level="Intermediate" data-description="Practical tips to plan study time and keep distractions low.">Open</a></td>
                 </tr>
               </tbody>
             </table>
@@ -394,6 +394,30 @@
         </div>
       </div>
     </div>
+    <!-- Tutorial Viewer Modal (for All Tutorials rows) -->
+    <div class="modal fade" id="tutorialViewerModal" tabindex="-1" aria-labelledby="tutorialViewerLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tutorialViewerLabel">Tutorial</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="d-flex gap-3">
+              <img id="viewerImage" src="" alt="" style="max-width:140px;max-height:120px;display:none;border-radius:6px;object-fit:cover">
+              <div>
+                <h5 id="viewerTitle" class="mb-1">Title</h5>
+                <p id="viewerMeta" class="small text-muted mb-2">Category • Time • Level</p>
+                <p id="viewerDescription">Description</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- <script src="https://cdn.datatables.net/2.3.8/js/dataTables.dataTables.min.js"></script> -->
     <script>
@@ -457,6 +481,59 @@
           var modalEl = document.getElementById('newTutorialModal');
           var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
           modal.hide();
+        });
+
+        // open tutorial viewer when clicking Open in All Tutorials
+        function openViewer(data) {
+          $('#viewerTitle').text(data.title || 'Untitled');
+          $('#viewerMeta').text((data.category || '') + ' • ' + (data.time || '') + ' • ' + (data.level || ''));
+          $('#viewerDescription').text(data.description || 'No description available.');
+          if (data.image) {
+            $('#viewerImage').attr('src', data.image).show();
+          } else {
+            $('#viewerImage').hide();
+          }
+          var vmodalEl = document.getElementById('tutorialViewerModal');
+          var vmodal = bootstrap.Modal.getOrCreateInstance(vmodalEl);
+          vmodal.show();
+        }
+
+        // wire up static rows
+        $(document).on('click', '.open-tutorial', function(e) {
+          e.preventDefault();
+          var $btn = $(this);
+          openViewer({
+            title: $btn.data('title'),
+            category: $btn.data('category'),
+            time: $btn.data('time'),
+            level: $btn.data('level'),
+            description: $btn.data('description'),
+            image: $btn.data('image')
+          });
+        });
+
+        // when tutorials are loaded from storage, make their Open buttons launch the modal
+        // intercept DataTable draw to attach handler to generated rows
+        $('#tutorials').on('draw.dt', function() {
+          $('#tutorials tbody a.btn-outline-primary').each(function() {
+            var $a = $(this);
+            if (!$a.hasClass('open-tutorial')) {
+              // attempt to find matching data from localStorage by title
+              var title = $a.closest('tr').find('td').first().text().trim();
+              var stored = [];
+              try { stored = JSON.parse(localStorage.getItem('tutorialsData')) || []; } catch (err) { stored = []; }
+              var match = stored.find(function(t) { return t.title === title; }) || null;
+              if (match) {
+                $a.addClass('open-tutorial');
+                $a.data('title', match.title || '');
+                $a.data('category', match.category || '');
+                $a.data('time', match.time || '');
+                $a.data('level', match.level || '');
+                $a.data('description', match.description || '');
+                $a.data('image', match.image || '');
+              }
+            }
+          });
         });
       
       });
