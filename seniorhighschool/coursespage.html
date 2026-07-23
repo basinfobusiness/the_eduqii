@@ -80,6 +80,84 @@
             </div>
           </div>
         </div>
+
+        <div class="col-md-6">
+          <div class="card course-card">
+            <div class="card-body">
+              <h5 class="card-title">Financial Accounting</h5>
+              <p class="card-text">Fundamentals of financial accounting for recording and reporting business transactions.</p>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
+                <button class="btn btn-outline-secondary btn-sm view-details" data-course="Financial Accounting">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card course-card">
+            <div class="card-body">
+              <h5 class="card-title">Cost Accounting</h5>
+              <p class="card-text">Explore cost behaviours, costing methods, budgets, and performance measurement.</p>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
+                <button class="btn btn-outline-secondary btn-sm view-details" data-course="Cost Accounting">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card course-card">
+            <div class="card-body">
+              <h5 class="card-title">Economics</h5>
+              <p class="card-text">Introduction to microeconomics and macroeconomics principles and market systems.</p>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
+                <button class="btn btn-outline-secondary btn-sm view-details" data-course="Economics">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card course-card">
+            <div class="card-body">
+              <h5 class="card-title">Geography</h5>
+              <p class="card-text">Study physical landscapes, human environments, and geographic tools for analysis.</p>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
+                <button class="btn btn-outline-secondary btn-sm view-details" data-course="Geography">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card course-card">
+            <div class="card-body">
+              <h5 class="card-title">CRS</h5>
+              <p class="card-text">Christian Religious Studies covering values, ethics, faith, and community living.</p>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
+                <button class="btn btn-outline-secondary btn-sm view-details" data-course="CRS">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card course-card">
+            <div class="card-body">
+              <h5 class="card-title">General Knowledge in Art</h5>
+              <p class="card-text">Overview of art history, appreciation, and cultural forms across traditions.</p>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" disabled>View Syllabus (PDF)</button>
+                <button class="btn btn-outline-secondary btn-sm view-details" data-course="General Knowledge in Art">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- PDF Viewer Modal -->
@@ -161,6 +239,36 @@
                 title: 'Productivity Software',
                 description: 'Learn Microsoft Access, Excel, PowerPoint and Word for efficient productivity.',
                 extra: '<ul class="list-unstyled"><li><strong>Topics:</strong> Database design, spreadsheets, slides, documents</li><li><strong>Format:</strong> Project-led tutorials and real-world tasks</li><li><strong>Audience:</strong> students and office users</li></ul>'
+              },
+              'Financial Accounting': {
+                title: 'Financial Accounting',
+                description: 'Fundamentals of financial accounting for recording and reporting business transactions.',
+                extra: '<ul class="list-unstyled"><li><strong>Topics:</strong> Journals, ledgers, financial statements, trial balance</li><li><strong>Format:</strong> Worked examples and statement preparation</li><li><strong>Audience:</strong> business and accounting students</li></ul>'
+              },
+              'Cost Accounting': {
+                title: 'Cost Accounting',
+                description: 'Explore cost behaviours, costing methods, budgets, and performance measurement.',
+                extra: '<ul class="list-unstyled"><li><strong>Topics:</strong> Cost classification, budgeting, standard costing, variance analysis</li><li><strong>Format:</strong> Case studies and practical exercises</li><li><strong>Audience:</strong> students pursuing business and finance</li></ul>'
+              },
+              'Economics': {
+                title: 'Economics',
+                description: 'Introduction to microeconomics and macroeconomics principles and market systems.',
+                extra: '<ul class="list-unstyled"><li><strong>Topics:</strong> Supply and demand, market structures, national income, fiscal policy</li><li><strong>Format:</strong> Theory, examples, and real-world applications</li><li><strong>Audience:</strong> learners interested in social sciences</li></ul>'
+              },
+              'Geography': {
+                title: 'Geography',
+                description: 'Study physical landscapes, human environments, and geographic tools for analysis.',
+                extra: '<ul class="list-unstyled"><li><strong>Topics:</strong> Physical geography, human geography, maps, environmental systems</li><li><strong>Format:</strong> Map skills, field examples, and thematic studies</li><li><strong>Audience:</strong> students exploring earth sciences</li></ul>'
+              },
+              'CRS': {
+                title: 'CRS',
+                description: 'Christian Religious Studies covering values, ethics, faith, and community living.',
+                extra: '<ul class="list-unstyled"><li><strong>Topics:</strong> Christian doctrines, morals, relationships, social responsibility</li><li><strong>Format:</strong> Text study, reflection, and group discussion</li><li><strong>Audience:</strong> students learning about faith and ethics</li></ul>'
+              },
+              'General Knowledge in Art': {
+                title: 'General Knowledge in Art',
+                description: 'Overview of art history, appreciation, and cultural forms across traditions.',
+                extra: '<ul class="list-unstyled"><li><strong>Topics:</strong> Art history, visual elements, cultural art forms, art appreciation</li><li><strong>Format:</strong> Illustrated examples and discussion questions</li><li><strong>Audience:</strong> learners of visual arts and culture</li></ul>'
               }
             };
             var details = courseInfo[courseKey] || { title: courseKey, description: 'More information is coming soon.', extra: '' };
