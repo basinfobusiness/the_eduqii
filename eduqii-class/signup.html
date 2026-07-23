@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<title>Student Signup — Eduqii Class</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+		<style>
+			body { padding-top: 3rem; }
+		</style>
+	</head>
+	<body>
+		<main class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<h1 class="mb-3">Signup to Enrol in a Class</h1>
+					<p class="text-muted">Complete the form below to register for a class. We’ll save your details securely.</p>
+
+					<div id="alertPlaceholder"></div>
+
+					<form id="signupForm" class="card p-4">
+						<div class="mb-3">
+							<label for="fullName" class="form-label">Full name</label>
+							<input id="fullName" name="fullName" class="form-control" required>
+						</div>
+
+						<div class="mb-3">
+							<label for="email" class="form-label">Email</label>
+							<input id="email" name="email" type="email" class="form-control" required>
+						</div>
+
+						<div class="mb-3">
+							<label for="phone" class="form-label">Phone (optional)</label>
+							<input id="phone" name="phone" class="form-control">
+						</div>
+
+						<div class="mb-3">
+							<label for="course" class="form-label">Course</label>
+							<select id="course" name="course" class="form-select" required>
+								<option value="">Choose a course...</option>
+								<option>Programming with Python</option>
+								<option>Introduction to Programming</option>
+								<option>Business Management</option>
+								<option>Biology</option>
+								<option>General Science</option>
+							</select>
+						</div>
+
+						<div class="mb-3">
+							<label for="password" class="form-label">Create password (optional)</label>
+							<input id="password" name="password" type="password" class="form-control" placeholder="Create account password (optional)">
+						</div>
+
+						<div class="d-flex justify-content-end gap-2">
+							<a href="../enrolpage.html" class="btn btn-outline-secondary">Back</a>
+							<button id="submitBtn" type="submit" class="btn btn-primary">Submit & Enrol</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</main>
+
+		<!-- Firebase JS (modular) -->
+		<script type="module">
+			// Replace the firebaseConfig object below with your project's values
+			import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js';
+			import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
+			import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+
+			const firebaseConfig = {
+				apiKey: "AIzaSyACb__eSwHJtPYka1GK7HuAc8mtDXX9eLw",
+				authDomain: "eduqii.firebaseapp.com",
+				projectId: "eduqii",
+				storageBucket: "eduqii.firebasestorage.app",
+				messagingSenderId: "885827252573",
+				appId: "1:885827252573:web:67cacd487a2c902a9138b4",
+                measurementId: "G-D01VEZY342"
+			};
+
+			const app = initializeApp(firebaseConfig);
+			const db = getFirestore(app);
+			const auth = getAuth(app);
+
+			const form = document.getElementById('signupForm');
+			const alertPlaceholder = document.getElementById('alertPlaceholder');
+			const submitBtn = document.getElementById('submitBtn');
+
+			function showAlert(message, type='success'){
+				alertPlaceholder.innerHTML = `<div class="alert alert-${type} alert-dismissible" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
+			}
+
+			form.addEventListener('submit', async (e) => {
+				e.preventDefault();
+				submitBtn.disabled = true;
+				const name = form.fullName.value.trim();
+				const email = form.email.value.trim();
+				const phone = form.phone.value.trim();
+				const course = form.course.value;
+				const password = form.password.value;
+
+				try {
+					// Optionally create an Auth user if password provided
+					let userId = null;
+					if (email && password) {
+						const cred = await createUserWithEmailAndPassword(auth, email, password);
+						userId = cred.user.uid;
+					}
+
+					// Save enrollment record to Firestore
+					await addDoc(collection(db, 'enrollments'), {
+						name,
+						email,
+						phone: phone || null,
+						course,
+						userId: userId || null,
+						createdAt: serverTimestamp()
+					});
+
+					showAlert('Enrollment submitted — check your email for confirmation (if applicable).', 'success');
+					form.reset();
+				} catch (err) {
+					console.error(err);
+					showAlert('Submission failed: ' + (err.message || err), 'danger');
+				} finally {
+					submitBtn.disabled = false;
+				}
+			});
+		</script>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

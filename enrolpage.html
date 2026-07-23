@@ -249,11 +249,37 @@
         <div class="bg-light p-5 rounded-lg text-center">
           <h2 class="mb-4">Ready to Get Started?</h2>
           <p class="lead mb-4">Join our community of learners and transform your education experience.</p>
-          <a href="#" class="btn btn-bd-primary btn-lg me-2">Enrol Now</a>
+          <button type="button" class="btn btn-bd-primary btn-lg me-2" data-bs-toggle="modal" data-bs-target="#enrolNowModal">Enrol Now</button>
           <a href="#" class="btn btn-outline-secondary btn-lg">Learn More</a>
         </div>
       </div>
     </main>
+
+    <!-- Enrol Now Modal -->
+    <div class="modal fade" id="enrolNowModal" tabindex="-1" aria-labelledby="enrolNowModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="enrolNowModalLabel">Signup Information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Thank you for choosing Eduqii! Please complete the registration form to secure your enrollment.</p>
+            <ul>
+              <li>Step 1: Create an account with your email address.</li>
+              <li>Step 2: Choose your desired course and payment option.</li>
+              <li>Step 3: Verify your email and submit your details.</li>
+              <li>Step 4: Start learning immediately after confirmation.</li>
+            </ul>
+            <p class="mb-0">If you need help, reach out to our support team at <a href="mailto:support@eduqii.com">support@eduqii.com</a>.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            <a href="eduqii-class/signup.html" class="btn btn-bd-primary">Go to Signup</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- FOOTER -->
     <footer class="container mt-5 py-5">
