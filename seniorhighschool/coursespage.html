@@ -22,6 +22,10 @@
         </div>
       </div>
 
+      <div class="mb-4">
+        <input id="courseSearchInput" type="search" class="form-control" placeholder="Search courses..." aria-label="Search courses">
+      </div>
+
       <div class="row g-3">
         <div class="col-md-6">
           <div class="card course-card">
@@ -338,6 +342,22 @@
         var iframe = document.getElementById('pdfViewerFrame');
         var titleEl = document.getElementById('pdfViewerTitle');
         var openNew = document.getElementById('pdfOpenNew');
+        var searchInput = document.getElementById('courseSearchInput');
+        var courseCards = Array.from(document.querySelectorAll('.course-card'));
+
+        function filterCourses(){
+          var query = searchInput.value.trim().toLowerCase();
+          courseCards.forEach(function(card){
+            var title = card.querySelector('.card-title').textContent.trim().toLowerCase();
+            var description = card.querySelector('.card-text').textContent.trim().toLowerCase();
+            var match = !query || title.indexOf(query) !== -1 || description.indexOf(query) !== -1;
+            card.closest('.col-md-6').style.display = match ? '' : 'none';
+          });
+        }
+
+        if (searchInput) {
+          searchInput.addEventListener('input', filterCourses);
+        }
 
         document.addEventListener('click', function(e){
           var t = e.target;
