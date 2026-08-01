@@ -15,20 +15,21 @@
         border-bottom: 1px solid rgba(255, 255, 255, .18);
       }
       .offcanvas-body {
-        background: #ffffff;
-        color: #1f2937;
+        background: var(--bs-body-bg);
+        color: var(--bs-body-color);
       }
       .offcanvas-body h5,
       .offcanvas-body .offcanvas-course-title {
-        color: #111827;
+        color: var(--bs-body-color);
       }
       .offcanvas-body p,
       .offcanvas-body .text-muted,
       .offcanvas-body li {
-        color: #374151 !important;
+        color: var(--bs-body-color) !important;
       }
       .productivity-pane {
-        background: #f8fbff;
+        background: var(--bs-input-bg);
+        border: 1px solid rgba(0, 0, 0, 0.08);
       }
       .productivity-links a {
         min-width: 140px;
@@ -38,6 +39,19 @@
       .productivity-links a:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 22px rgba(33, 150, 243, 0.18);
+      }
+      :root[data-bs-theme="dark"] .productivity-pane {
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(148, 163, 184, 0.25);
+      }
+      :root[data-bs-theme="dark"] .offcanvas-body {
+        background: var(--bs-body-bg);
+        color: var(--bs-body-color);
+      }
+      :root[data-bs-theme="dark"] .offcanvas-body p,
+      :root[data-bs-theme="dark"] .offcanvas-body .text-muted,
+      :root[data-bs-theme="dark"] .offcanvas-body li {
+        color: var(--bs-body-color) !important;
       }
       .productivity-badge {
         display: inline-flex;
