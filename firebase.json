@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "THE_EDUQII",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
