@@ -80,7 +80,26 @@
           window.location.href = '../enrolpage.html';
         }, 1200);
       } catch (error) {
-        showAlert(error.message || 'Unable to sign in. Please check your credentials.', 'danger');
+        switch(error.message) {
+          case 'Firebase: Error (auth/user-not-found)':
+            showAlert('No account found with this email. Please sign up first.', 'warning');
+            break;
+          case 'Firebase: Error (auth/wrong-password)':
+            showAlert('Incorrect password. Please try again.', 'warning');
+            break;
+          case 'Firebase: Error (auth/invalid-email)':
+            showAlert('Invalid email format. Please check your email.', 'warning');
+            break;
+          case 'Firebase: Error (auth/too-many-requests)':
+            showAlert('Too many failed login attempts. Please try again later.', 'danger');
+            break;
+            case 'Firebase: Error (auth/invalid-login-credentials).':
+            showAlert('Invalid login credentials. Please check your email and password.', 'danger');
+            break;
+          default:
+            // showAlert(error.message || 'Unable to sign in. Please check your credentials.', 'danger');
+            showAlert('Unable to sign in. Please check your credentials.', 'danger');
+        }
       }
     });
   </script>
