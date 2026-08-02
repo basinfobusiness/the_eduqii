@@ -224,29 +224,78 @@
 				alertPlaceholder.innerHTML = `<div class="alert alert-${type} alert-dismissible" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 			}
 
+			// --- Helper: simple HTML escape to avoid injected markup ---
+			function escapeHtml(str){
+				if (!str && str !== '') return '';
+				return String(str)
+					.replace(/&/g, '&amp;')
+					.replace(/</g, '&lt;')
+					.replace(/>/g, '&gt;')
+					.replace(/"/g, '&quot;')
+					.replace(/'/g, '&#39;')
+					.replace(/`/g, '&#96;');
+			}
+
+			// --- Helper: create or import an AES-GCM key stored in sessionStorage ---
+			async function getOrCreateCryptoKey(){
+				const keyName = 'eduqii_crypto_key_v1';
+				const stored = sessionStorage.getItem(keyName);
+				if (stored) {
+					const raw = Uint8Array.from(atob(stored), c => c.charCodeAt(0));
+					return crypto.subtle.importKey('raw', raw.buffer, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+				}
+				const key = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt']);
+				const exported = await crypto.subtle.exportKey('raw', key);
+				const b64 = btoa(String.fromCharCode.apply(null, new Uint8Array(exported)));
+				sessionStorage.setItem(keyName, b64);
+				return key;
+			}
+
+			// --- Helper: encrypt a string and return url-safe base64 iv:cipher ---
+			async function encryptString(plain){
+				if (plain == null) return null;
+				const key = await getOrCreateCryptoKey();
+				const iv = crypto.getRandomValues(new Uint8Array(12));
+				const enc = new TextEncoder().encode(plain);
+				const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc);
+				const ivStr = btoa(String.fromCharCode.apply(null, iv));
+				const ctStr = btoa(String.fromCharCode.apply(null, new Uint8Array(cipher)));
+				return ivStr + ':' + ctStr;
+			}
+
 			form.addEventListener('submit', async (e) => {
 				e.preventDefault();
 				submitBtn.disabled = true;
-				const name = form.fullName.value.trim();
-				const email = form.email.value.trim();
-				const phone = form.phone.value.trim();
-				const course = form.course.value;
+				const rawName = form.fullName.value.trim();
+				const rawEmail = form.email.value.trim();
+				const rawPhone = form.phone.value.trim();
+				const rawCourse = form.course.value;
 				const password = form.password.value;
+
+				// escape HTML-special characters first
+				const nameEsc = escapeHtml(rawName);
+				const phoneEsc = escapeHtml(rawPhone);
+				const courseEsc = escapeHtml(rawCourse);
 
 				try {
 					// Optionally create an Auth user if password provided
 					let userId = null;
-					if (email && password) {
-						const cred = await createUserWithEmailAndPassword(auth, email, password);
+					if (rawEmail && password) {
+						const cred = await createUserWithEmailAndPassword(auth, rawEmail, password);
 						userId = cred.user.uid;
 					}
 
-					// Save enrollment record to Firestore
+					// Encrypt fields before saving to Firestore
+					const encryptedName = await encryptString(nameEsc);
+					const encryptedPhone = phoneEsc ? await encryptString(phoneEsc) : null;
+					const encryptedCourse = await encryptString(courseEsc);
+
+					// Save enrollment record to Firestore (email left plaintext for auth purposes)
 					await addDoc(collection(db, 'enrollments'), {
-						name,
-						email,
-						phone: phone || null,
-						course,
+						name: encryptedName,
+						email: rawEmail || null,
+						phone: encryptedPhone,
+						course: encryptedCourse,
 						userId: userId || null,
 						createdAt: serverTimestamp()
 					});
@@ -255,7 +304,7 @@
 					form.reset();
 				} catch (err) {
 					console.error(err);
-					showAlert('Submission failed: ' + (err.message || err), 'danger');
+					showAlert('Submission failed. Please try again later.', 'danger');
 				} finally {
 					submitBtn.disabled = false;
 				}

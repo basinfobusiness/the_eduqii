@@ -29,6 +29,9 @@
           <label for="password" class="form-label">Password</label>
           <input id="password" name="password" type="password" class="form-control" required>
         </div>
+        <div class="mb-2">
+          <a href="forgot-password.html" class="small">Forgot password?</a>
+        </div>
 
         <div class="d-flex justify-content-between align-items-center gap-2">
           <a href="signup.html" class="btn btn-outline-secondary">Create account</a>
@@ -68,13 +71,63 @@
       `;
     }
 
+    // --- Escape helper to avoid injected markup when storing/displaying values ---
+    function escapeHtml(str){
+      if (!str && str !== '') return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/`/g, '&#96;');
+    }
+
+    // --- Crypto helpers: store ephemeral AES key in sessionStorage ---
+    async function getOrCreateCryptoKey(){
+      const keyName = 'eduqii_crypto_key_v1';
+      const stored = sessionStorage.getItem(keyName);
+      if (stored) {
+        const raw = Uint8Array.from(atob(stored), c => c.charCodeAt(0));
+        return crypto.subtle.importKey('raw', raw.buffer, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+      }
+      const key = await crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt', 'decrypt']);
+      const exported = await crypto.subtle.exportKey('raw', key);
+      const b64 = btoa(String.fromCharCode.apply(null, new Uint8Array(exported)));
+      sessionStorage.setItem(keyName, b64);
+      return key;
+    }
+
+    async function encryptString(plain){
+      if (plain == null) return null;
+      const key = await getOrCreateCryptoKey();
+      const iv = crypto.getRandomValues(new Uint8Array(12));
+      const enc = new TextEncoder().encode(plain);
+      const cipher = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc);
+      const ivStr = btoa(String.fromCharCode.apply(null, iv));
+      const ctStr = btoa(String.fromCharCode.apply(null, new Uint8Array(cipher)));
+      return ivStr + ':' + ctStr;
+    }
+
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const email = form.email.value.trim();
-      const password = form.password.value;
+      const rawEmail = form.email.value.trim();
+      const rawPassword = form.password.value;
+
+      // Escape values for safe storage/display; do NOT use escaped password for authentication
+      const emailEsc = escapeHtml(rawEmail);
 
       try {
-        await signInWithEmailAndPassword(auth, email, password);
+        // encrypt escaped email and store encrypted copy in sessionStorage BEFORE authenticating
+        try {
+          const encryptedEmail = await encryptString(emailEsc);
+          sessionStorage.setItem('eduqii_login_email_enc_v1', encryptedEmail);
+        } catch (cryptoErr) {
+          console.warn('Encryption failed, continuing without storing encrypted copy', cryptoErr);
+        }
+
+        // proceed with authentication using raw credentials (Firebase requires plaintext email/password)
+        await signInWithEmailAndPassword(auth, rawEmail, rawPassword);
         showAlert('Login successful. Redirecting to your lessons...', 'success');
         setTimeout(() => {
           window.location.href = '../enrolpage.html';
@@ -97,7 +150,6 @@
             showAlert('Invalid login credentials. Please check your email and password.', 'danger');
             break;
           default:
-            // showAlert(error.message || 'Unable to sign in. Please check your credentials.', 'danger');
             showAlert('Unable to sign in. Please check your credentials.', 'danger');
         }
       }
