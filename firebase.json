@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "eduqii-fad6f",
     "public": "THE_EDUQII",
     "ignore": [
       "firebase.json",
