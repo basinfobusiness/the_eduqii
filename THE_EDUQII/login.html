@@ -128,7 +128,7 @@
 
         // proceed with authentication using raw credentials (Firebase requires plaintext email/password)
         await signInWithEmailAndPassword(auth, rawEmail, rawPassword);
-        showAlert('Login successful. Redirecting to your lessons...', 'success');
+        showAlert('Login successful. Redirecting to enrolment page...', 'success');
         setTimeout(() => {
           window.location.href = '../enrolpage.html';
         }, 1200);
