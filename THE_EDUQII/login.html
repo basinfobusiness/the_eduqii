@@ -130,7 +130,7 @@
         await signInWithEmailAndPassword(auth, rawEmail, rawPassword);
         showAlert('Login successful. Redirecting to enrolment page...', 'success');
         setTimeout(() => {
-          window.location.href = '../enrolpage.html';
+          window.location.href = 'https://basinfobusiness.github.io/the_eduqii/enrolpage.html';
         }, 1200);
       } catch (error) {
         switch(error.message) {
