@@ -8,5 +8,10 @@
         "Name": "Founders' Day",
         "Details": "Kwame Nkrumah Memorial Day / Founders' Day, celebrated on Monday, September 21, 2026 (formerly known simply as Founders' Day). Ghana also recognizes an alternative Founders' Day on August 4 to honor the 'Big Six' and all patriots who sacrificed for the country's freedom",
         "Image": "https://basinfobusiness.github.io/the_eduqii/images/eduqii_legends.png"
+    },
+    {
+        "Name": "Tim Berners-Lee",
+        "Details": "Sir Tim Berners-Lee is the English computer scientist best known as the inventor of the World Wide Web. In 1989, while working as a software engineer at CERN, he proposed a global hypertext project to allow researchers to seamlessly share information. By 1991, he had written the core technologies that still power the modern internet: HTML, HTTP, URLs, the first web browser, and the first web server. Crucially, he chose not to patent his invention, ensuring the Web was released to the public for free, fueling its global, open adoption.",
+        "Image": "https://basinfobusiness.github.io/the_eduqii/images/tim_berners-lee.jpg"
     }
 ]
