@@ -1,5 +1,15 @@
 [
     {
+        "Name": "Alan Turing",
+        "Details": "Alan Turing (1912–1954) was a British mathematician, logician, and computer scientist who is widely regarded as the father of theoretical computer science and artificial intelligence. He played a pivotal role in breaking the German Enigma code during World War II, significantly contributing to the Allied victory. Turing's groundbreaking work laid the foundation for modern computing, and his legacy continues to influence the field of computer science today.",
+        "Image": "https://basinfobusiness.github.io/the_eduqii/images/alan_turing.jpg"
+    },
+    {
+        "Name": "Ada Lovelace",
+        "Details": "Ada Lovelace (1815–1852) was an English mathematician and writer, widely recognized as the world's first computer programmer. She is best known for her work on Charles Babbage's early mechanical general-purpose computer, the Analytical Engine. Lovelace's notes on the engine include what is considered the first algorithm intended to be processed by a machine, making her a pioneering figure in the history of computing.",
+        "Image": "https://basinfobusiness.github.io/the_eduqii/images/ada_lovelace.jpg"
+    },
+    {
         "Name": "Douglas Englebart",
         "Details": "Douglas Engelbart (1925–2013) was an American engineer and computer science pioneer who fundamentally transformed how humans interact with computers. He is globally celebrated for inventing the computer mouse, but his visionary concepts laid the structural groundwork for the entire modern digital age",
         "Image": "https://basinfobusiness.github.io/the_eduqii/images/douglas_englebart.jpg"
