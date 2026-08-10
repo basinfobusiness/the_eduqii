@@ -7,7 +7,7 @@
     {
         "Name": "Grace Hopper",
         "Details": "Grace Hopper (1906–1992) was an American computer scientist and United States Navy rear admiral. She was a pioneer in the field of computer programming, developing the first compiler for a computer programming language and popularizing the idea of machine-independent programming languages, which led to the development of COBOL, one of the first high-level programming languages. Hopper's contributions to computing have had a lasting impact on the field.",
-        "Image": "https://basinfobusiness.github.io/the_eduqii/images/grace_hopper.jpg"
+        "Image": "https://basinfobusiness.github.io/the_eduqii/images/grace_hopper.webp"
     },
     {
         "Name": "Alan Turing",
@@ -17,7 +17,7 @@
     {
         "Name": "Ada Lovelace",
         "Details": "Ada Lovelace (1815–1852) was an English mathematician and writer, widely recognized as the world's first computer programmer. She is best known for her work on Charles Babbage's early mechanical general-purpose computer, the Analytical Engine. Lovelace's notes on the engine include what is considered the first algorithm intended to be processed by a machine, making her a pioneering figure in the history of computing.",
-        "Image": "https://basinfobusiness.github.io/the_eduqii/images/ada_lovelace.jpg"
+        "Image": "https://basinfobusiness.github.io/the_eduqii/images/ada_lovelace.png"
     },
     {
         "Name": "Douglas Englebart",
