@@ -1,0 +1,84 @@
+@media (max-width: 991.98px) {
+  img,
+  video,
+  iframe,
+  canvas {
+    max-width: 100%;
+  }
+
+  .container,
+  .container-fluid {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .navbar-brand {
+    white-space: normal;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+
+  .table-responsive,
+  .dataTables_wrapper,
+  .dt-container {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  input,
+  select,
+  textarea {
+    max-width: 100%;
+  }
+
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  h1.display-1 {
+    font-size: clamp(2.5rem, 11vw, 4rem);
+  }
+
+  h1.display-2 {
+    font-size: clamp(2.25rem, 10vw, 3.5rem);
+  }
+
+  h1.display-3 {
+    font-size: clamp(2rem, 9vw, 3rem);
+  }
+
+  h1.display-4,
+  h1.display-5,
+  h1.display-6 {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .container,
+  .container-fluid {
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+  }
+
+  .py-5 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .btn {
+    white-space: normal;
+  }
+
+  .btn-group {
+    flex-wrap: wrap;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+}
