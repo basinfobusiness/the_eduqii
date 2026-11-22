@@ -83,6 +83,10 @@
 }
 
 @media (max-width: 575.98px) {
+  body {
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+  }
+
   .container,
   .container-fluid {
     padding-right: 0.75rem;
