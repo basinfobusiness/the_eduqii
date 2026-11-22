@@ -71,6 +71,17 @@ body {
   }
 }
 
+@media (max-width: 575.98px) {
+  .carousel-item {
+    height: auto;
+  }
+
+  .carousel-item img {
+    height: auto;
+    object-fit: contain;
+  }
+}
+
 @media (min-width: 768px) {
   .carousel-item {
     height: 28rem;
