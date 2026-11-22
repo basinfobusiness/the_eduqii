@@ -280,6 +280,7 @@
                   <option>Mathematics</option>
                   <option>English</option>
                   <option>Social Studies</option>
+                  <option value="Food">Food</option>
                 </select>
                 <div id="subjectMsg" class="form-text text-danger mt-1" style="display:none"></div>
               </div>
@@ -517,6 +518,7 @@
                     <option>Science</option>
                     <option>Mathematics</option>
                     <option>English</option>
+                    <option value="Food">Food</option>
                   </select>
                 </div>
                 <div class="col-md-4">
@@ -585,7 +587,7 @@
           var minsText = btn.closest('tr').find('td').eq(3).text().trim();
           var mins = parseInt((minsText||'').replace(/[^\d]/g,''),10) || 10;
           $('#timerModal #quizMinutes').val(mins);
-          $('#timerModal #quizStart').val(start || '2026-08-21T00:00');
+          $('#timerModal #quizStart').val(start || '2026-11-31T00:00');
           if (forecast) { $('#forecastInfo').text('Forecasted students: ' + forecast).show(); } else { $('#forecastInfo').hide(); }
           var modalEl = document.getElementById('timerModal');
           var modal = bootstrap.Modal.getOrCreateInstance(modalEl);
@@ -647,7 +649,7 @@
               } else {
                 var now = new Date();
                 var ms = s.getTime() - now.getTime();
-                var max = 2147483647;
+                var max = 2147483646;
                 if (ms>0 && ms<=max){ scheduledReminders[id] = setTimeout(function(){ document.getElementById('availMessage').textContent = 'Reminder: "' + r.title + '" is now available.'; document.getElementById('availForecast').style.display = 'none'; var availModal = bootstrap.Modal.getOrCreateInstance(document.getElementById('availabilityModal')); availModal.show(); }, ms); }
               }
             }
