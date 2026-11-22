@@ -1,9 +1,22 @@
 @media (max-width: 991.98px) {
-  img,
   video,
   iframe,
-  canvas {
+  canvas,
+  svg {
     max-width: 100%;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  a {
+    overflow-wrap: anywhere;
+  }
+
+  .row > * {
+    min-width: 0;
   }
 
   .container,
@@ -18,6 +31,12 @@
 
   .card {
     max-width: 100%;
+  }
+
+  .card-body,
+  .modal-body,
+  .list-group-item {
+    overflow-wrap: anywhere;
   }
 
   .table-responsive,
@@ -37,6 +56,11 @@
   pre {
     max-width: 100%;
     overflow-x: auto;
+  }
+
+  .dt-container .dt-layout-row {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
   }
 
   h1.display-1 {
@@ -75,6 +99,24 @@
   }
 
   .btn-group {
+    flex-wrap: wrap;
+  }
+
+  .d-flex.justify-content-between,
+  .d-flex.gap-2 {
+    flex-wrap: wrap;
+  }
+
+  .productivity-links {
+    flex-wrap: wrap;
+  }
+
+  .productivity-links > a {
+    flex: 1 1 140px;
+    min-width: 0;
+  }
+
+  .pagination {
     flex-wrap: wrap;
   }
 
